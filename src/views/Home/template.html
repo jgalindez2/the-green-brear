@@ -1,0 +1,58 @@
+<div class="home">
+  <el-container>
+    <el-main>
+      <el-row class="pb-3" :gutter="10" justify="space-between">
+        <el-col :span="16">
+          <div class="header-title">
+            <p class="text-left"><b>Topics</b></p>
+          </div>
+        </el-col>
+        <el-col :span="2">
+          <div class="header-title">
+            <p><b>Posts</b></p>
+          </div>
+        </el-col>
+        <el-col :span="2">
+          <div class="header-title">
+            <p><b>Views</b></p>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="header-title">
+            <p><b>Last post</b></p>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row>
+        <div v-for="topic in topics" :key="topic['.key']">
+          <el-col :span="16" class="mb-2 pb-3">
+            <div class="text-left">
+              <img class="rounded" :src="users[topic.userId].avatar" width="60" height="60" alt="">
+              <div class="d-inline-block align-middle ml-3">
+                <router-link tag="h2" class="mb-1 title" :to="`/topic/${topic['.key']}`"> {{ topic.title }} </router-link>
+                <span class="grey-color">
+                  <font-awesome-icon icon="user" size="1x" />
+                  {{ users[topic.userId].name }}
+                </span>
+                <span> - </span>
+                <span class="grey-color">
+                  <font-awesome-icon icon="calendar-alt" size="1x" />
+                  {{ topic.publishedAt | moment('from', 'now') }}
+                </span>
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="2"><span class="font-weight-bold">{{ Object.keys(topic.posts).length }}</span></el-col>
+          <el-col :span="2"><span class="font-weight-bold">{{topic.views}}</span> </el-col>
+          <el-col class="text-left pl-3" :span="4">
+            <img class="rounded" :src="users[posts[topic.lastPostId].userId].avatar" width="40" height="40" alt="">
+            <div class="d-inline-block align-middle ml-3">
+              <p class="limit-name mb-0 green-color">{{ users[posts[topic.lastPostId].userId].name }}</p>
+              <small class="grey-color">{{ topic.lastPostAt | moment('from', 'now') }}</small>
+            </div>
+          </el-col>
+        </div>
+      </el-row>
+    </el-main>
+  </el-container>
+</div>

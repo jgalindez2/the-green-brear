@@ -1,0 +1,21 @@
+@import '../../assets/styles/variable';
+
+.home{
+  .limit-name{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 130px;
+  }
+  .header-title{
+    border-bottom: 2px solid #738a73;
+  }
+  .title {
+    color: $themecolor;
+    cursor: pointer;
+    &:hover{
+      color: #5c6f5c;
+      text-decoration: underline;
+    }
+  }
+}
