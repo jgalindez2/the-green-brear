@@ -11,14 +11,14 @@ export default new Router({
       name: 'app-common',
       component: () => import(/* webpackChunkName: "app-common" */ './layouts/AppCommon.vue'),
       children: [{
-        name: 'home',
+        name: 'Home',
         path: '',
-        component: () => import(/* webpackChunkName: "home" */ './views/Home/')
+        component: () => import(/* webpackChunkName: "Home" */ './views/Home/')
       }, {
-        name: 'topic',
+        name: 'TopicShow',
         path: 'topic/:id',
         props: true,
-        component: () => import(/* webpackChunkName: "topic" */ './views/Topic/')
+        component: () => import(/* webpackChunkName: "TopicShow" */ './views/Topic/')
       }]
     }
   ]

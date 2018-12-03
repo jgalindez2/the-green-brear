@@ -2,13 +2,17 @@
 
 <script>
 import data from '@/catalog/data.json'
+import TopicList from '@/components/TopicList'
 export default {
+  components: {
+    TopicList
+  },
   data () {
-    return {
-      categories: data.categories,
-      posts: data.posts,
-      topics: data.topics,
-      users: data.users
+    return {}
+  },
+  computed: {
+    topics () {
+      return Object.values(data.topics)
     }
   }
 }
