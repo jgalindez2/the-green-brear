@@ -20,6 +20,11 @@ export default new Router({
         props: true,
         component: () => import(/* webpackChunkName: "TopicShow" */ './views/Topic/')
       }]
+    },
+    {
+      name: 'NoFound',
+      path: '*',
+      component: () => import(/* webpackChunkName: "NoFound" */ './views/NoFound/')
     }
   ]
 })
