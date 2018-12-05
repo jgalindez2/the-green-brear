@@ -22,12 +22,27 @@
         </div>
       </el-col>
     </el-row>
-    <el-row>
+      <paginate
+        name="topicsPaginate"
+        :list="topics"
+        tag="div"
+        :per="8"
+      >
       <topic-list-item
-        v-for="topic in topics"
+        v-for="topic in paginated('topicsPaginate')"
         :key="topic['.key']"
         :topic="topic" />
-    </el-row>
+      </paginate>
+      <paginate-links
+        :limit="4"
+        :show-step-links="true"
+        for="topicsPaginate"
+        :classes="{
+          'ul': 'el-pager',
+          '.next > a': 'btn-prev',
+          '.prev > a': 'prev-link'
+        }"
+      ></paginate-links>
   </div>
 </template>
 
@@ -37,14 +52,28 @@ export default {
   props: {
     topics: {
       required: true,
-      type: Array
+      type: Array,
+      default () {
+        return []
+      }
     }
   },
   components: {
     TopicListItem
+  },
+  data () {
+    return {
+      paginate: ['topicsPaginate']
+    }
   }
 }
 </script>
-<style>
+<style lang="scss">
+@import '../assets/styles/variable';
 
+.topic-list{
+  .header-title{
+    border-bottom: 2px solid $themecolor;
+  }
+}
 </style>

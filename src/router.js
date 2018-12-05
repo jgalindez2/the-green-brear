@@ -8,8 +8,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'app-common',
-      component: () => import(/* webpackChunkName: "app-common" */ './layouts/AppCommon.vue'),
+      component: () => import('./layouts/AppCommon.vue'),
       children: [{
         name: 'Home',
         path: '',

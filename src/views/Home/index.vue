@@ -3,9 +3,11 @@
 <script>
 import data from '@/catalog/data.json'
 import TopicList from '@/components/TopicList'
+import TopicNavbar from '@/components/TopicNavbar'
 export default {
   components: {
-    TopicList
+    TopicList,
+    TopicNavbar
   },
   data () {
     return {}
@@ -13,6 +15,12 @@ export default {
   computed: {
     topics () {
       return Object.values(data.topics)
+    },
+    mostViewsTopics () {
+      return Object.values(data.topics).sort((a, b) => b.views - a.views).slice(0, 5)
+    },
+    recentTopics () {
+      return Object.values(data.topics).sort((a, b) => b.publishedAt - a.publishedAt).slice(0, 5)
     }
   }
 }

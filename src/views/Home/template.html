@@ -1,7 +1,19 @@
 <div class="home">
   <el-container>
     <el-main>
-      <topic-list :topics="topics" />
+      <el-row :gutter="10">
+        <el-col :span="18">
+          <topic-list :topics="topics" />
+        </el-col>
+        <el-col :span="6">
+          <topic-navbar :topics="recentTopics">
+            <span slot="title">Recent Topics</span>
+          </topic-navbar>
+          <topic-navbar :topics="mostViewsTopics">
+            <span slot="title">Most Seen</span>
+          </topic-navbar>
+        </el-col>
+      </el-row>
     </el-main>
   </el-container>
 </div>
