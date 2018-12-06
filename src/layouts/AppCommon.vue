@@ -1,10 +1,10 @@
 <template>
   <div class="main">
     <app-nav-menu/>
-    <app-header/>
-    <transition name="fade" mode="out-in" appear>
-      <router-view/>
-    </transition>
+    <transition-group name="fade" mode="out-in" appear>
+      <app-header key="app-header"/>
+      <router-view key="router-view"/>
+    </transition-group>
   </div>
 </template>
 

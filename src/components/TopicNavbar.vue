@@ -4,14 +4,13 @@
       <div slot="header" class="clearfix text-left">
         <slot name="title"></slot>
       </div>
-      <div v-for="topic in topics" :key="topic['.key']" class="text item d-flex border-bottom mb-2">
+      <div v-for="topic in topics" :key="topic['.key']" class="text item d-flex mb-2">
         <div class="mr-2">
           <font-awesome-icon icon="comments" size="1x" />
         </div>
-        <router-link class="d-inline-block mb-2 text-left" :to="{ name: 'TopicShow', params: { id: topic['.key'] } }"> {{ topic.title }}</router-link>
+        <router-link class="d-inline-block mb-2 text-left title" :to="{ name: 'TopicShow', params: { id: topic['.key'] } }"> {{ topic.title }}</router-link>
       </div>
     </el-card>
-    <br>
   </div>
 </template>
 
@@ -26,6 +25,30 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+  @import '../assets/styles/variable';
 
+  .topic-navbar{
+    margin-bottom: 20px;
+    &:last-child{
+      margin-bottom: 0;
+    }
+    .el-card__header{
+      background-color: #EEF4E8;
+    }
+    .title {
+      color: $themecolor;
+      cursor: pointer;
+      &:hover{
+        color: #5c6f5c;
+        text-decoration: underline;
+      }
+    }
+    .item{
+      border-bottom: 1px solid #dee2e6;
+      &:last-child{
+        border-bottom: none;
+      }
+    }
+  }
 </style>

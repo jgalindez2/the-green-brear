@@ -38,9 +38,7 @@
         :show-step-links="true"
         for="topicsPaginate"
         :classes="{
-          'ul': 'el-pager',
-          '.next > a': 'btn-prev',
-          '.prev > a': 'prev-link'
+          'ul': 'el-pager'
         }"
       ></paginate-links>
   </div>

@@ -17,10 +17,10 @@ export default {
       return Object.values(data.topics)
     },
     mostViewsTopics () {
-      return Object.values(data.topics).sort((a, b) => b.views - a.views).slice(0, 5)
+      return Object.values(data.topics).sort((a, b) => b.views - a.views).slice(0, 3)
     },
     recentTopics () {
-      return Object.values(data.topics).sort((a, b) => b.publishedAt - a.publishedAt).slice(0, 5)
+      return Object.values(data.topics).sort((a, b) => b.publishedAt - a.publishedAt).slice(0, 3)
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="nav-menu">
-    <el-menu :default-active="$route.path" active-text-color="#738a73" :router="true" class="el-menu-demo" mode="horizontal">
+    <el-menu :default-active="$route.path" active-text-color="#738a73" :router="true" class="el-menu-demo fixed-top" mode="horizontal">
       <div class="brand-icon">
         <font-awesome-icon :icon="['fab', 'gofore']" size="4x" />
         <span>The Green Bear</span>
@@ -24,13 +24,23 @@ export default {
 </script>
 
 <style lang="scss">
-  .brand-icon{
-    float: left;
-    margin-left: 10px;
-    color: #738a73;
-    span{
-      vertical-align: 20px;
+  .nav-menu{
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1500;
+    .el-menu-demo{
+      box-shadow: 0 1px 10px rgba(0,0,0,.3);
+    }
+    .brand-icon{
+      float: left;
       margin-left: 10px;
+      color: #738a73;
+      span{
+        vertical-align: 20px;
+        margin-left: 10px;
+      }
     }
   }
 </style>

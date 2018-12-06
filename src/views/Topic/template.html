@@ -1,3 +1,45 @@
-<div class="topic">
-  <h1>Hi {{ id }}</h1>
+<div class="topic-view">
+  <el-container>
+    <el-main>
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ categoryName }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ topic.title }}</el-breadcrumb-item>
+      </el-breadcrumb>
+      <br>
+      <div class="pr-4 pl-4 text-left">
+        <h1 class="title">{{ topic.title }}</h1>
+        <span class="grey-color">
+          <font-awesome-icon icon="calendar-alt" size="1x" />
+          {{ topic.publishedAt | moment("dddd, MMMM Do YYYY") }}
+        </span>
+        <div class="border-bottom mt-4">
+          <el-row>
+            <el-col :span="2">
+              <img class="rounded" :src="user.avatar" width="80" height="80" alt="">
+              <p class="grey-color mt-2 ml-4">
+                {{ user.name }}
+              </p>
+            </el-col>
+            <el-col :span="20">
+              <p class="ml-3">{{ firstPost.text }}</p>
+            </el-col>
+          </el-row>
+        </div>
+        <div v-for="post in posts" class="border-bottom mt-4">
+          <el-row>
+            <el-col :span="2">
+              <img class="rounded" :src="users[post.userId].avatar" width="80" height="80" alt="">
+              <p class="grey-color mt-2">
+                {{ users[post.userId].name }}
+              </p>
+            </el-col>
+            <el-col :span="20">
+              <p class="ml-3">{{ post.text }}</p>
+            </el-col>
+          </el-row>
+        </div>
+      </div>
+    </el-main>
+  </el-container>
 </div>
