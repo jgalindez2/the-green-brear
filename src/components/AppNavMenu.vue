@@ -2,8 +2,7 @@
   <div class="nav-menu">
     <el-menu :default-active="$route.path" active-text-color="#738a73" :router="true" class="el-menu-demo fixed-top" mode="horizontal">
       <div class="brand-icon">
-        <font-awesome-icon :icon="['fab', 'gofore']" size="4x" />
-        <span>The Green Bear</span>
+        <span>TGB</span>
       </div>
       <el-submenu class="float-right" index="/categories">
         <template slot="title">Categories</template>
@@ -34,11 +33,14 @@ export default {
       box-shadow: 0 1px 10px rgba(0,0,0,.3);
     }
     .brand-icon{
+      font-family: 'Nexa Rust';
       float: left;
       margin-left: 10px;
       color: #738a73;
       span{
-        vertical-align: 20px;
+        font-size: 40px;
+        letter-spacing: 10px;
+        vertical-align: -23px;
         margin-left: 10px;
       }
     }

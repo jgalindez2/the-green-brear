@@ -3,9 +3,11 @@
 <script>
 import data from '@/catalog/data'
 import PostsList from '@/components/PostsList'
+import PostForm from '@/components/PostForm'
 export default {
   components: {
-    PostsList
+    PostsList,
+    PostForm
   },
 
   props: {
@@ -29,6 +31,15 @@ export default {
     posts () {
       const postIds = Object.values(this.topic.posts)
       return Object.values(data.posts).filter(post => postIds.includes(post['.key']))
+    }
+  },
+
+  methods: {
+    savePost (text) {
+      const post = {
+        text,
+        topicId: this.id
+      }
     }
   }
 }

@@ -9,11 +9,8 @@
       <br>
       <div class="pr-4 pl-4 text-left">
         <h1 class="title">{{ topic.title }}</h1>
-        <span class="grey-color">
-          <font-awesome-icon icon="calendar-alt" size="1x" />
-          {{ topic.publishedAt | moment("dddd, MMMM Do YYYY") }}
-        </span>
         <posts-list :posts="posts"></posts-list>
+        <post-form @submit="savePost"></post-form>
       </div>
     </el-main>
   </el-container>
