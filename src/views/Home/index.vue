@@ -2,11 +2,11 @@
 
 <script>
 import data from '@/catalog/data.json'
-import TopicList from '@/components/TopicList'
+import TopicsList from '@/components/TopicsList'
 import TopicNavbar from '@/components/TopicNavbar'
 export default {
   components: {
-    TopicList,
+    TopicsList,
     TopicNavbar
   },
   data () {

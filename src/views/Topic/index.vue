@@ -2,35 +2,33 @@
 
 <script>
 import data from '@/catalog/data'
+import PostsList from '@/components/PostsList'
 export default {
+  components: {
+    PostsList
+  },
+
   props: {
     id: {
       type: String,
       required: true
     }
   },
+
   data () {
-    return {
-      users: data.users
-    }
+    return {}
   },
+
   computed: {
     topic () {
       return data.topics[this.id]
     },
-    firstPost () {
-      return data.posts[this.topic.firstPostId]
-    },
     categoryName () {
       return data.categories[this.topic.categoryId].name
     },
-    user () {
-      return data.users[this.topic.userId]
-    },
     posts () {
-      let arr = Object.values(data.posts).filter(post => post.topicId === this.id)
-      arr.shift()
-      return arr
+      const postIds = Object.values(this.topic.posts)
+      return Object.values(data.posts).filter(post => postIds.includes(post['.key']))
     }
   }
 }

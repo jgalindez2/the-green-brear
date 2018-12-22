@@ -20,9 +20,6 @@
 
 <script>
 export default {
-  mounted () {
-    console.log(this.$route)
-  },
   computed: {
     routeName () {
       return this.$route.name
@@ -38,7 +35,7 @@ export default {
   .header-bg{
     background-color: rgb(128, 143, 114);
     &.home-p{
-      padding: 70px 0 70px 0;
+      padding: 60px 0 30px 0;
       h1{
         margin-top: -40px;
       }
