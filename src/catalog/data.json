@@ -14,6 +14,7 @@
         "-KvdBp4adHJpppQWc3sI":"-KvdBp4adHJpppQWc3sI"
       },
       "name": "Feedback & Information",
+      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
       "slug": "feedback-and-information",
       ".key": "-KpR7vRkiRPpbUd_TVAR"
     },
@@ -31,6 +32,7 @@
         "-KvggzbFFFwafR2UV2PO": "-KvggzbFFFwafR2UV2PO"
       },
       "name": "Discussions",
+      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
       "slug": "discussions",
       ".key": "-KsjPKA6hDuHlQK_lJWO"
     },
@@ -46,6 +48,7 @@
         "-KxxSnNltjgIvlwAjmW8": "-KxxSnNltjgIvlwAjmW8"
       },
       "name": "Comedy",
+      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
       "slug": "comedy",
       ".key": "-KvclpNRjpI5W-j0JQGU"
     }

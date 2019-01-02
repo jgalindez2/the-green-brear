@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <app-nav-menu/>
+    <app-nav-menu :categories="categories"/>
     <transition-group name="fade" mode="out-in" appear>
       <app-header key="app-header"/>
       <router-view key="router-view"/>
@@ -11,10 +11,17 @@
 <script>
 import AppHeader from '@/components/AppHeader'
 import AppNavMenu from '@/components/AppNavMenu'
+import data from '@/catalog/data'
 export default {
   components: {
     AppHeader,
     AppNavMenu
+  },
+
+  computed: {
+    categories () {
+      return Object.values(data.categories)
+    }
   }
 }
 </script>

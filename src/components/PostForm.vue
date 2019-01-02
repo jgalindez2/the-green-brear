@@ -4,7 +4,7 @@
       <el-col :span="3" class="text-center">
         <div class="mt-1">
           <img class="rounded" src="http://i.imgur.com/6MuObMP.jpg" width="80" height="80" alt="">
-          <p class="grey-color text-center mt-2 mb-3">
+          <p class="grey-color text-center mt-2 mb-0">
             John Doe
           </p>
           <p class="grey-color">Posts: <b>8</b></p>

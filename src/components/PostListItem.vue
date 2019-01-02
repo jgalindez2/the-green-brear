@@ -4,7 +4,7 @@
       <el-col :span="3" class="text-center ">
         <div class="mt-1">
           <img class="rounded" :src="user.avatar" width="80" height="80" alt="">
-          <p class="grey-color text-center mt-2 mb-3">
+          <p class="grey-color text-center mt-2 mb-0">
             {{ user.name }}
           </p>
           <p class="grey-color">Posts: <b>{{ postsUserCount }}</b></p>

@@ -6,9 +6,9 @@
       </div>
       <el-submenu class="float-right" index="/categories">
         <template slot="title">Categories</template>
-        <el-menu-item index="2-1">item one</el-menu-item>
-        <el-menu-item index="2-2">item two</el-menu-item>
-        <el-menu-item index="2-3">item three</el-menu-item>
+        <template v-for="category in categories">
+          <el-menu-item :key="category['.key']" :index="`/category/${category.slug}`">{{ category.name }}</el-menu-item>
+        </template>
       </el-submenu>
       <el-menu-item class="float-right" index="/about">Unanswered Topics</el-menu-item>
       <el-menu-item class="float-right" index="/">Home</el-menu-item>
@@ -18,7 +18,11 @@
 
 <script>
 export default {
-
+  props: {
+    categories: {
+      type: Array
+    }
+  }
 }
 </script>
 

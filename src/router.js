@@ -18,6 +18,11 @@ export default new Router({
         path: 'topic/:id',
         props: true,
         component: () => import(/* webpackChunkName: "TopicShow" */ './views/Topic/')
+      }, {
+        name: 'Category',
+        path: 'category/:slug',
+        props: true,
+        component: () => import(/* webpackChunkName: "TopicShow" */ './views/Category/')
       }]
     },
     {
