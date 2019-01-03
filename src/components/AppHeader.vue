@@ -9,8 +9,8 @@
           </h1>
         </template>
         <template v-else>
-          <h1>
-            The Green Bear Forum
+          <h1 class="text-left">
+            {{ $route.name }}
           </h1>
         </template>
       </el-main>
@@ -35,13 +35,13 @@ export default {
   .header-bg{
     background-color: rgb(128, 143, 114);
     &.home-p{
-      padding: 60px 0 30px 0;
+      padding: 20px 0 20px 0;
       h1{
         margin-top: -40px;
       }
     }
     &.normal-p{
-      padding: 80px 0 80px 0;
+      padding: 30px 0 30px 0;
       h1{
         margin-top: 50px;
       }

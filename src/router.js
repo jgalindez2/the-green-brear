@@ -14,15 +14,19 @@ export default new Router({
         path: '',
         component: () => import(/* webpackChunkName: "Home" */ './views/Home/')
       }, {
-        name: 'TopicShow',
+        name: 'Topic',
         path: 'topic/:id',
         props: true,
-        component: () => import(/* webpackChunkName: "TopicShow" */ './views/Topic/')
+        component: () => import(/* webpackChunkName: "Topic" */ './views/Topic/')
       }, {
         name: 'Category',
         path: 'category/:slug',
         props: true,
-        component: () => import(/* webpackChunkName: "TopicShow" */ './views/Category/')
+        component: () => import(/* webpackChunkName: "Category" */ './views/Category/')
+      }, {
+        name: 'Categories',
+        path: 'categories',
+        component: () => import(/* webpackChunkName: "Categories" */ './views/Categories/')
       }]
     },
     {

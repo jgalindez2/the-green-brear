@@ -8,7 +8,7 @@
         <div class="mr-2">
           <font-awesome-icon icon="comments" size="1x" />
         </div>
-        <router-link class="d-inline-block mb-2 text-left title" :to="{ name: 'TopicShow', params: { id: topic['.key'] } }"> {{ topic.title }}</router-link>
+        <router-link class="d-inline-block mb-2 text-left title" :to="{ name: 'Topic', params: { id: topic['.key'] } }"> {{ topic.title }}</router-link>
       </div>
     </el-card>
   </div>

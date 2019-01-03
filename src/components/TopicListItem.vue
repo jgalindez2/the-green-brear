@@ -5,7 +5,7 @@
         <div class="text-left d-flex">
           <img class="rounded" :src="user.avatar" width="60" height="60" alt="">
           <div class="d-inline-block align-middle ml-3">
-            <router-link tag="h2" class="mb-1 title" :to="{ name: 'TopicShow', params: { id: topic['.key'] } }"> {{ topic.title }} </router-link>
+            <router-link tag="h2" class="mb-1 title" :to="{ name: 'Topic', params: { id: topic['.key'] } }"> {{ topic.title }} </router-link>
             <span class="grey-color">
               <font-awesome-icon icon="user" size="1x" />
               {{ user.name }}

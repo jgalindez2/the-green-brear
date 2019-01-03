@@ -66,12 +66,4 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-@import '../assets/styles/variable';
-
-.topic-list{
-  .header-title{
-    border-bottom: 2px solid $themecolor;
-  }
-}
-</style>
+<style lang="scss"></style>
