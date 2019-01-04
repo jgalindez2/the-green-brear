@@ -1,7 +1,7 @@
 <template src="./template.html"></template>
 
 <script>
-import data from '@/catalog/data'
+import { mapState } from 'vuex'
 import TopicsList from '@/components/TopicsList'
 export default {
   components: {
@@ -16,11 +16,16 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      sourceData: state => state.sourceData
+    }),
     category () {
-      return Object.values(data.categories).find(category => category.slug === this.slug)
+      return Object.values(this.sourceData.categories)
+        .find(category => category.slug === this.slug)
     },
     topics () {
-      return Object.values(data.topics).filter(topic => topic.categoryId === this.category['.key'])
+      return Object.values(this.sourceData.topics)
+        .filter(topic => topic.categoryId === this.category['.key'])
     }
   }
 }

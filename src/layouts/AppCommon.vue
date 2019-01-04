@@ -2,19 +2,19 @@
   <div class="main">
     <app-nav-menu :categories="categories"/>
     <transition-group name="fade" mode="out-in" appear>
-      <app-header key="app-header"/>
+      <the-header key="app-header"/>
       <router-view key="router-view"/>
     </transition-group>
   </div>
 </template>
 
 <script>
-import AppHeader from '@/components/AppHeader'
+import TheHeader from '@/components/TheHeader'
 import AppNavMenu from '@/components/AppNavMenu'
 import data from '@/catalog/data'
 export default {
   components: {
-    AppHeader,
+    TheHeader,
     AppNavMenu
   },
 

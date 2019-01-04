@@ -3,10 +3,10 @@
     <el-col :span="16" class="mb-2 pb-3">
       <div class="text-left d-flex">
         <span class="grey-color">
-          <font-awesome-icon icon="user" size="1x" />
+          <font-awesome-icon class="mt-2" :icon="getIcon()" size="3x" />
         </span>
         <div class="d-inline-block align-middle ml-3">
-          <router-link tag="h2" class="mb-1 title" :to="{ name: 'Category', params: { slug: category.slug } }"> {{ category.name }} </router-link>
+          <router-link tag="h2" class="mb-1 title link" :to="{ name: 'Category', params: { slug: category.slug } }"> {{ category.name }} </router-link>
           <p class="gray-color">{{ category.description }}</p>
         </div>
       </div>
@@ -35,6 +35,19 @@ export default {
   },
 
   methods: {
+    getIcon () {
+      const name = this.category.name
+      switch (name) {
+        case 'Comedy':
+          return 'grin-squint-tears'
+        case 'Discussions':
+          return 'comments'
+        case 'Feedback & Information':
+          return 'info-circle'
+        default:
+          return 'book-reader'
+      }
+    },
     topics (key) {
       return Object.values(data.topics)
         .filter(topic => topic.categoryId === key)

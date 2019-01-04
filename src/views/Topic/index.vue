@@ -1,7 +1,7 @@
 <template src="./template.html"></template>
 
 <script>
-import data from '@/catalog/data'
+import { mapState } from 'vuex'
 import PostsList from '@/components/PostsList'
 import PostForm from '@/components/PostForm'
 export default {
@@ -22,15 +22,19 @@ export default {
   },
 
   computed: {
+    ...mapState ({
+      sourceData: state => state.sourceData
+    }),
     topic () {
-      return data.topics[this.id]
+      return this.sourceData.topics[this.id]
     },
     categoryName () {
-      return data.categories[this.topic.categoryId].name
+      return this.sourceData.categories[this.topic.categoryId].name
     },
     posts () {
       const postIds = Object.values(this.topic.posts)
-      return Object.values(data.posts).filter(post => postIds.includes(post['.key']))
+      return Object.values(this.sourceData.posts)
+        .filter(post => postIds.includes(post['.key']))
     }
   },
 

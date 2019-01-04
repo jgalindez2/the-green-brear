@@ -1,16 +1,16 @@
 <template src="./template.html"></template>
 
 <script>
-import data from '@/catalog/data'
+import { mapState } from 'vuex'
 import CategoryList from '@/components/CategoryList'
 export default {
   components: {
     CategoryList
   },
   computed: {
-    categories () {
-      return Object.values(data.categories)
-    }
+    ...mapState({
+      categories: state => Object.values(state.sourceData.categories)
+    })
   }
 }
 </script>
