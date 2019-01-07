@@ -11,7 +11,7 @@
         </div>
       </el-col>
       <el-col :span="19">
-        <p class="ml-3 text-justify">{{ post.text }}</p>
+        <p class="ml-3 text-justify" v-html="post.text "></p>
         <p class="grey-color date-info">
           <font-awesome-icon icon="calendar-alt" size="1x" />
           Posted on: {{ post.publishedAt | moment("dddd, MMMM Do YYYY") }}
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import data from '@/catalog/data'
+import { mapState } from 'vuex'
 export default {
   props: {
     post: {
@@ -36,11 +36,14 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      sourceData: state => state.sourceData
+    }),
     user () {
-      return data.users[this.post.userId]
+      return this.sourceData.users[this.post.userId]
     },
     postsUserCount () {
-      return Object.values(data.posts).filter(post => post.userId === this.user['.key']).length
+      return Object.values(this.sourceData.posts).filter(post => post.userId === this.user['.key']).length
     }
   }
 }

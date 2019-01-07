@@ -1,7 +1,7 @@
 <template src="./template.html"></template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import PostsList from '@/components/PostsList'
 import PostForm from '@/components/PostForm'
 export default {
@@ -22,9 +22,6 @@ export default {
   },
 
   computed: {
-    ...mapState ({
-      sourceData: state => state.sourceData
-    }),
     topic () {
       return this.sourceData.topics[this.id]
     },
@@ -35,16 +32,23 @@ export default {
       const postIds = Object.values(this.topic.posts)
       return Object.values(this.sourceData.posts)
         .filter(post => postIds.includes(post['.key']))
-    }
+    },
+    ...mapState ({
+      sourceData: state => state.sourceData
+    })
   },
 
   methods: {
-    savePost (text) {
+    saveNewPost (text) {
       const post = {
         text,
         topicId: this.id
       }
-    }
+      this.savePost(post)
+    },
+    ...mapActions([
+      'savePost'
+    ])
   }
 }
 </script>

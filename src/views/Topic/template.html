@@ -10,7 +10,7 @@
       <div class="pr-4 pl-4 text-left">
         <h1 class="title">{{ topic.title }}</h1>
         <posts-list :posts="posts"></posts-list>
-        <post-form @submit="savePost"></post-form>
+        <post-form @submit="saveNewPost"></post-form>
       </div>
     </el-main>
   </el-container>
