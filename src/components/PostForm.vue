@@ -3,11 +3,11 @@
     <el-row>
       <el-col :span="3" class="text-center">
         <div class="mt-1">
-          <img class="rounded" src="http://i.imgur.com/6MuObMP.jpg" width="80" height="80" alt="">
+          <img class="rounded" :src="user.avatar" width="80" height="80" alt="">
           <p class="grey-color text-center mt-2 mb-0">
-            John Doe
+            {{ user.name }}
           </p>
-          <p class="grey-color">Posts: <b>8</b></p>
+          <p class="grey-color">Posts: <b>{{ userPostsLength }}</b></p>
         </div>
       </el-col>
       <el-col :span="19">
@@ -20,6 +20,7 @@
 
 <script>
 import { VueEditor } from 'vue2-editor'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     VueEditor
@@ -36,6 +37,16 @@ export default {
         [{ 'font': [] }],
         [{ 'align': [] }]
       ]
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      user: 'getUser'
+    }),
+    userPostsLength () {
+      console.log(this.user)
+      return this.user.posts ? Object.values(this.user.posts).length : 0
     }
   },
 

@@ -9,6 +9,11 @@ export default new Vuex.Store({
     sourceData,
     userId: '38St7Q8Zi2N1SPa5ahzssq9kbyp1'
   },
+  getters: {
+    getUser (state) {
+      return state.sourceData.users[state.userId]
+    }
+  },
   mutations: {
     setPost (state, post) {
       state.sourceData.posts = Object.assign({}, state.sourceData.posts, post)
