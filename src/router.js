@@ -27,6 +27,10 @@ export default new Router({
         name: 'Categories',
         path: 'categories',
         component: () => import(/* webpackChunkName: "Categories" */ './views/Categories/')
+      }, {
+        name: 'Profile',
+        path: 'me',
+        component: () => import(/* webpackChunkName: "Categories" */ './views/Profile/')
       }]
     },
     {

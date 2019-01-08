@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { countObjectProperty } from '@/utils/'
 import data from '@/catalog/data.json'
 export default {
   props: {
@@ -45,7 +46,7 @@ export default {
   },
   computed: {
     postsCount () {
-      return Object.keys(this.topic.posts).length - 1
+      return countObjectProperty(this.topic.posts) -1
     },
     user () {
       return data.users[this.topic.userId]

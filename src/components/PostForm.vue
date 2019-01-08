@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { countObjectProperty } from '@/utils/'
 import { VueEditor } from 'vue2-editor'
 import { mapGetters } from 'vuex'
 export default {
@@ -45,8 +46,7 @@ export default {
       user: 'getUser'
     }),
     userPostsLength () {
-      console.log(this.user)
-      return this.user.posts ? Object.values(this.user.posts).length : 0
+      return countObjectProperty(this.user.posts)
     }
   },
 

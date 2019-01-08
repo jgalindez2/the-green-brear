@@ -11,11 +11,13 @@
         </div>
       </el-col>
       <el-col :span="19">
-        <p class="ml-3 text-justify" v-html="post.text "></p>
-        <p class="grey-color date-info">
-          <font-awesome-icon icon="calendar-alt" size="1x" />
-          Posted on: {{ post.publishedAt | moment("dddd, MMMM Do YYYY") }}
-        </p>
+        <div class="d-flex flex-column">
+          <p class="ml-3 mb-5 text-justify" v-html="post.text "></p>
+            <p class="grey-color date-info ml-auto mt-auto">
+              <font-awesome-icon icon="calendar-alt" size="1x" />
+              Posted on: {{ post.publishedAt | moment("dddd, MMMM Do YYYY") }}
+            </p>
+        </div>
       </el-col>
     </el-row>
   </div>

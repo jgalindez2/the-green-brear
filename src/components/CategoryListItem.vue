@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { countObjectProperty } from '@/utils/'
 import data from '@/catalog/data'
 export default {
   props: {
@@ -53,7 +54,7 @@ export default {
         .filter(topic => topic.categoryId === key)
     },
     topicsCount (category) {
-      return Object.values(category.topics).length
+      return countObjectProperty(category.topics)
     },
     postsCount (category) {
       return this.topics(category['.key'])

@@ -1,0 +1,36 @@
+<div class="user-profile">
+  <el-containter>
+    <el-main>
+      <el-row :gutter="10">
+        <el-col :span="6">
+          <el-card>
+            <img width="180" height="180" class="rounded" :src="user.avatar" alt="">
+            <h1 class="mt-2">{{ user.username }}</h1>
+            <h3 class="mb-0">{{ user.name }}</h3>
+            <p class="mb-0">{{ user.bio ? user.bio : 'No bio specified' }}</p>
+            <p class="mb-2">Online</p>
+            <h4 class="mb-2">{{ postsCount }} Posts - {{ topicsCount }} Topics </h4>
+            <template v-if="user.website">
+              <hr>
+              <a href="">batman.com</a>
+            </template>
+            <el-button class="d-block mx-auto mb-2" type="primary">Edit profile</el-button>
+            <small>Member since {{ user.registeredAt | moment("MMMM Do YYYY") }}.</small>
+            <br>
+            <small>Last visited {{ user.lastVisitAt | moment("from", "now")  }}.</small>
+          </el-card>
+        </el-col>
+        <el-col :span="18">
+          <h2 class="text-left">{{ user.username | capitalize }}'s recent activity</h2>
+          <hr>
+          <template v-if="posts.length !== 0">
+            <posts-list :posts="posts"></posts-list>
+          </template>
+          <template v-else>
+            <h3 class="mt-4">You don't have any post yet.</h3>
+          </template>
+        </el-col>
+      </el-row>
+    </el-main>
+  </el-containter>
+</div>

@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     sourceData,
-    userId: '38St7Q8Zi2N1SPa5ahzssq9kbyp1'
+    userId: '7uVPJS9GHoftN58Z2MXCYDqmNAh2'
   },
   getters: {
     getUser (state) {
