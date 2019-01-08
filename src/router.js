@@ -31,6 +31,11 @@ export default new Router({
         name: 'Profile',
         path: 'me',
         component: () => import(/* webpackChunkName: "Categories" */ './views/Profile/')
+      }, {
+        name: 'Profile',
+        path: 'me/edit',
+        props: { edit: true },
+        component: () => import(/* webpackChunkName: "Categories" */ './views/Profile/')
       }]
     },
     {

@@ -3,10 +3,21 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import { countObjectProperty } from '@/utils/'
+import UserInfoCard from '@/components/UserInfoCard'
+import UserFormEdit from '@/components/UserFormEdit'
 import PostsList from '@/components/PostsList'
 export default {
   components: {
-    PostsList
+    PostsList,
+    UserInfoCard,
+    UserFormEdit
+  },
+
+  props: {
+    edit: {
+      type: Boolean,
+      default: false
+    }
   },
 
   filters: {
