@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="user-info-card">
     <img width="180" height="180" class="rounded" :src="user.avatar" alt="">
     <h1 class="mt-2">{{ user.username }}</h1>
     <h3 class="mb-0">{{ user.name }}</h3>
@@ -10,7 +10,7 @@
       <hr>
       <a href="">batman.com</a>
     </template>
-    <router-link to="/me/edit">
+    <router-link class="edit-button" v-if="!editMode" to="/me/edit">
       <el-button class="d-block mx-auto mb-2" type="primary">Edit profile</el-button>
     </router-link>
     <small>Member since {{ user.registeredAt | moment("MMMM Do YYYY") }}.</small>
@@ -33,11 +33,19 @@ export default {
     topicsCount: {
       required: true,
       type: Number
+    },
+    editMode: {
+      type: Boolean,
+      default: false
     }
   }
 }
 </script>
 
-<style>
-
+<style lang="scss">
+  .user-info-card{
+    .edit-button{
+      text-decoration: none !important;
+    }
+  }
 </style>

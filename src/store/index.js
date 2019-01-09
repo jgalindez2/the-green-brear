@@ -25,6 +25,9 @@ export default new Vuex.Store({
     appentPostToUser (state, { postId, userId }) {
       const user = state.sourceData.users[userId]
       user.posts = Object.assign({}, user.posts, { [postId]: postId })
+    },
+    setUser (state, user) {
+      Vue.set(state.sourceData.users, user['.key'], user)
     }
   },
   actions: {
@@ -40,6 +43,9 @@ export default new Vuex.Store({
       context.commit('setPost', newPost)
       context.commit('appendPostToTopic', { postId: key, topicId: post.topicId })
       context.commit('appentPostToUser', { postId: key, userId: context.state.userId })
+    },
+    editUser (context, user) {
+      context.commit('setUser', user)
     }
   }
 })

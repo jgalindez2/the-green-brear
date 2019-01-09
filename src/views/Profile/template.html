@@ -4,6 +4,7 @@
       <el-row :gutter="10">
         <el-col :span="6">
           <user-info-card
+            :editMode="edit"
             :user="user"
             :postsCount="postsCount"
             :topicsCount="topicsCount" />
@@ -19,8 +20,8 @@
               <h3 class="mt-4">You don't have any post yet.</h3>
             </template>
           </template>
-          <template>
-            <user-form-edit :user="user"></user-form-edit>
+          <template v-else>
+            <user-form-edit @submit="saveUser" :user="user"></user-form-edit>
           </template>
         </el-col>
       </el-row>
