@@ -1,4 +1,6 @@
-# the-green-bear
+# The Green Bear
+
+[Visit me!](http://www.thegreenbear.surge.sh)
 
 ## Project setup
 ```
