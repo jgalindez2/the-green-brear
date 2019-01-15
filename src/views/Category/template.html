@@ -8,7 +8,9 @@
               <h1>{{ category.name }}</h1>
               <p>{{ category.description }}</p>
             </div>
-            <el-button class="" type="success">Start a Topic</el-button>
+            <router-link :to="{ name: 'New-Topic', params: { category: this.category } }">
+              <el-button type="primary">Start a Topic</el-button>
+            </router-link>
           </div>
           <topics-list :topics="topics" />
         </el-col>

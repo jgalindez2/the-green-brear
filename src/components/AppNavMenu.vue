@@ -9,7 +9,7 @@
         <el-menu-item index="/me">Profile</el-menu-item>
       </el-submenu>
       <el-menu-item class="float-right" index="/categories">Categories</el-menu-item>
-      <el-menu-item class="float-right" index="/about">Unanswered Topics</el-menu-item>
+      <!-- <el-menu-item class="float-right" index="/about">Unanswered Topics</el-menu-item> -->
       <el-menu-item class="float-right" index="/">Home</el-menu-item>
     </el-menu>
   </div>

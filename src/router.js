@@ -14,6 +14,11 @@ export default new Router({
         path: '',
         component: () => import(/* webpackChunkName: "Home" */ './views/Home/')
       }, {
+        name: 'New-Topic',
+        path: 'topic/create',
+        props: true,
+        component: () => import(/* webpackChunkName: "New-Topic" */ './views/TopicCreate/')
+      }, {
         name: 'Topic',
         path: 'topic/:id',
         props: true,
@@ -30,12 +35,12 @@ export default new Router({
       }, {
         name: 'Profile',
         path: 'me',
-        component: () => import(/* webpackChunkName: "Categories" */ './views/Profile/')
+        component: () => import(/* webpackChunkName: "Profile" */ './views/Profile/')
       }, {
-        name: 'Profile',
+        name: 'My-Profile',
         path: 'me/edit',
         props: { edit: true },
-        component: () => import(/* webpackChunkName: "Categories" */ './views/Profile/')
+        component: () => import(/* webpackChunkName: "My-Profile" */ './views/Profile/')
       }]
     },
     {

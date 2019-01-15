@@ -41,9 +41,6 @@ export default {
       required: true
     }
   },
-  data () {
-    return {}
-  },
   computed: {
     postsCount () {
       return countObjectProperty(this.topic.posts) -1
