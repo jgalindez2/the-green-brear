@@ -38,7 +38,7 @@ export default {
       this.$router.push({ name: 'Topic', params: {id: topicId} })
     },
     cancel () {
-      this.$router.push({ name: 'Category', params: {slug: this.category.slug} })
+      this.$router.push({ name: 'Topic', params: {id: topicId} })
     },
     ...mapActions([
       'createTopic'

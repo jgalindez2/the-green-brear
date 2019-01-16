@@ -48,7 +48,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async createTopic ({ state, commit, dispatch }, { title, content, categoryId }) {
+    async createTopic ({ state, commit, dispatch }, { title, text, categoryId }) {
       try {
         const key = '_' + Math.random().toString(36).substr(2, 9)
         const publishedAt = new Date().getTime()
@@ -67,7 +67,9 @@ export default new Vuex.Store({
         commit('setTopic', newTopic)
         commit('appentTopicToCategory', { topicId: key, categoryId })
         commit('appentTopicToUser', { topicId: key, userId })
-        dispatch('savePost', { text: content, topicId: key })
+        const post = await dispatch('savePost', { text, topicId: key })
+        console.log({ ...newTopic[key], firstPostId: post['.key'] })
+        commit('udpateTopic', { ...newTopic[key], firstPostId: post['.key'] })
         return key
       } catch (error) {
         return error
@@ -77,30 +79,30 @@ export default new Vuex.Store({
       try {
         const topic = state.sourceData.topics[topicId]
         const firstPost = state.sourceData.posts[topic.firstPostId]
-        const newTopic = { ...topic, title }
-        const newPost = { ...firstPost, text }
-
-        console.log(newPost, text)
-
-        commit('udpateTopic', newTopic)
-        commit('udpatePost', newPost)
+        commit('udpateTopic', { ...topic, title })
+        commit('udpatePost', { ...firstPost, text })
         return topic['.key']
       } catch (error) {
         return error
       }
     },
-    savePost (context, post) {
-      const key = '_' + Math.random().toString(36).substr(2, 9)
-      const publishedAt = new Date().getTime()
-      const newPost = {
-        [key]: {
-          ...post,
-          ...{ '.key': key, publishedAt, userId: context.state.userId }
+    async savePost (context, post) {
+      try {
+        const key = '_' + Math.random().toString(36).substr(2, 9)
+        const publishedAt = new Date().getTime()
+        const newPost = {
+          [key]: {
+            ...post,
+            ...{ '.key': key, publishedAt, userId: context.state.userId }
+          }
         }
+        context.commit('setPost', newPost)
+        context.commit('appendPostToTopic', { postId: key, topicId: post.topicId })
+        context.commit('appentPostToUser', { postId: key, userId: context.state.userId })
+        return context.state.sourceData.posts[key]
+      } catch (error) {
+        return error
       }
-      context.commit('setPost', newPost)
-      context.commit('appendPostToTopic', { postId: key, topicId: post.topicId })
-      context.commit('appentPostToUser', { postId: key, userId: context.state.userId })
     },
     editUser (context, user) {
       context.commit('setUser', user)

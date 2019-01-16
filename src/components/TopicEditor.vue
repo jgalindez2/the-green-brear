@@ -9,7 +9,7 @@
       </el-form-item>
       <el-form-item class="mt-2">
         <el-button type="default" @click="$emit('cancel')">Cancel</el-button>
-        <el-button type="primary" @click="onSubmit">Post Topic</el-button>
+        <el-button type="primary" @click="onSubmit">{{ isUpdate ? 'Edit' : 'Post' }} </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -47,6 +47,12 @@ export default {
         [{ 'font': [] }],
         [{ 'align': [] }]
       ]
+    }
+  },
+
+  computed: {
+    isUpdate () {
+      return !!this.title
     }
   },
 
