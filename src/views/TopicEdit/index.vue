@@ -9,7 +9,7 @@ export default {
   },
 
   props: {
-    categoryId: {
+    topicId: {
       type: String,
       required: true
     }
@@ -20,8 +20,11 @@ export default {
   },
 
   computed: {
-    category () {
-      return Object.values(this.sourceData.categories).find(c => c['.key'] === this.categoryId)
+    topic () {
+      return Object.values(this.sourceData.topics).find(t => t['.key'] === this.topicId)
+    },
+    firstPost () {
+      return this.sourceData.posts[this.topic.firstPostId]
     },
     ...mapState ({
       sourceData: state => state.sourceData
@@ -30,10 +33,10 @@ export default {
 
   methods: {
     async save ({ title, text }) {
-      const topicId = await this.createTopic({
+      const topicId = await this.updateTopic({
         title,
         text,
-        categoryId: this.categoryId
+        topicId: this.topicId
       })
       this.$router.push({ name: 'Topic', params: {id: topicId} })
     },
@@ -41,7 +44,7 @@ export default {
       this.$router.push({ name: 'Category', params: {slug: this.category.slug} })
     },
     ...mapActions([
-      'createTopic'
+      'updateTopic'
     ])
   }
 }

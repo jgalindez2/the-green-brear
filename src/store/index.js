@@ -39,28 +39,55 @@ export default new Vuex.Store({
     },
     setUser (state, user) {
       Vue.set(state.sourceData.users, user['.key'], user)
+    },
+    udpateTopic (state, topic) {
+      Vue.set(state.sourceData.topics, topic['.key'], topic)
+    },
+    udpatePost (state, post) {
+      Vue.set(state.sourceData.posts, post['.key'], post)
     }
   },
   actions: {
-    createTopic ({ state, commit, dispatch }, { title, content, categoryId }) {
-      const key = '_' + Math.random().toString(36).substr(2, 9)
-      const publishedAt = new Date().getTime()
-      const userId = state.userId
-      const newTopic = {
-        [key]: {
-          categoryId,
-          title,
-          publishedAt,
-          userId,
-          views: 0,
-          lastPostId: "-Kvfw0huq0j2O00bOiWd",
-          '.key': key
+    async createTopic ({ state, commit, dispatch }, { title, content, categoryId }) {
+      try {
+        const key = '_' + Math.random().toString(36).substr(2, 9)
+        const publishedAt = new Date().getTime()
+        const userId = state.userId
+        const newTopic = {
+          [key]: {
+            categoryId,
+            title,
+            publishedAt,
+            userId,
+            views: 0,
+            lastPostId: "-Kvfw0huq0j2O00bOiWd",
+            '.key': key
+          }
         }
+        commit('setTopic', newTopic)
+        commit('appentTopicToCategory', { topicId: key, categoryId })
+        commit('appentTopicToUser', { topicId: key, userId })
+        dispatch('savePost', { text: content, topicId: key })
+        return key
+      } catch (error) {
+        return error
       }
-      commit('setTopic', newTopic)
-      commit('appentTopicToCategory', { topicId: key, categoryId })
-      commit('appentTopicToUser', { topicId: key, userId })
-      dispatch('savePost', { text: content, topicId: key })
+    },
+    async updateTopic ({ state, commit }, { title, text, topicId }) {
+      try {
+        const topic = state.sourceData.topics[topicId]
+        const firstPost = state.sourceData.posts[topic.firstPostId]
+        const newTopic = { ...topic, title }
+        const newPost = { ...firstPost, text }
+
+        console.log(newPost, text)
+
+        commit('udpateTopic', newTopic)
+        commit('udpatePost', newPost)
+        return topic['.key']
+      } catch (error) {
+        return error
+      }
     },
     savePost (context, post) {
       const key = '_' + Math.random().toString(36).substr(2, 9)

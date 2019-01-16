@@ -1,0 +1,10 @@
+<div class="topic-create">
+  <el-containter>
+    <el-main>
+      <h1 class="text-left">Update - {{ topic.title }}</h1>
+      <el-card class="box-form mx-auto">
+        <topic-editor :title="topic.title" :text="firstPost.text" @save="save" @cancel="cancel"></topic-editor>
+      </el-card>
+    </el-main>
+  </el-containter>
+</div>
