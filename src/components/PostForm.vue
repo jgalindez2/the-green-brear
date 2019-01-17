@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { countObjectProperty } from '@/utils/'
+import { countObjectProperty, editorOptions } from '@/utils/'
 import { VueEditor } from 'vue2-editor'
 import { mapGetters } from 'vuex'
 export default {
@@ -30,14 +30,7 @@ export default {
   data () {
     return {
       text: '',
-      editorOptions: [
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        [{ 'indent': '-1' }, { 'indent': '+1' }],
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-        [{ 'font': [] }],
-        [{ 'align': [] }]
-      ]
+      editorOptions
     }
   },
 
@@ -53,6 +46,7 @@ export default {
   methods: {
     onSubmit () {
       this.$emit('submit', this.text)
+      this.text = ''
     }
   }
 }

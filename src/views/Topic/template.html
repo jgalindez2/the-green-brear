@@ -10,7 +10,7 @@
       <div class="pr-4 pl-4 text-left">
         <h1 class="title d-inline-block">{{ topic.title }}</h1>
         <router-link class="d-inline-block float-right" :to="{ name: 'EditTopic', params: { topicId: topic['.key'] } }">
-          <el-button type="primary">Edit</el-button>
+          <el-button type="primary"><font-awesome-icon icon="edit" size="1x"></font-awesome-icon> Edit Topic</el-button>
         </router-link>
         <posts-list :posts="posts"></posts-list>
         <post-form @submit="saveNewPost"></post-form>

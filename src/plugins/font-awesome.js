@@ -6,6 +6,7 @@ import {
   faCalendarAlt,
   faComments,
   faInfoCircle,
+  faEdit,
   faGrinSquintTears,
   faBookReader
 } from '@fortawesome/free-solid-svg-icons'
@@ -16,6 +17,7 @@ library.add(
   faCalendarAlt,
   faGofore,
   faInfoCircle,
+  faEdit,
   faComments,
   faGrinSquintTears,
   faBookReader

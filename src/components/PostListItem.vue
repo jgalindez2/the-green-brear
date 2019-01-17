@@ -12,11 +12,18 @@
       </el-col>
       <el-col :span="19">
         <div class="d-flex flex-column">
-          <p class="ml-3 mb-5 text-justify" v-html="post.text "></p>
-            <p class="grey-color date-info ml-auto mt-auto">
-              <font-awesome-icon icon="calendar-alt" size="1x" />
-              Posted on: {{ post.publishedAt | moment("dddd, MMMM Do YYYY") }}
-            </p>
+          <p v-if="!editMode" class="ml-3 mb-5 text-justify" v-html="post.text"></p>
+          <div v-else class="edit-mode">
+            <vue-editor v-model="post.text" placeholder="Type your message here" :editorToolbar="editorOptions"></vue-editor>
+            <el-button @click="editMode = false" class="mt-2">Cancel</el-button>
+            <el-button class="mt-2" type="primary" @click="submit(post)">Update Post</el-button>
+          </div>
+          <p class="grey-color date-info ml-auto mt-auto">
+            <font-awesome-icon v-if="!editMode" @click="editMode = true" icon="edit" size="1x" class="mr-3 link"></font-awesome-icon>
+            <font-awesome-icon  icon="calendar-alt" size="1x" />
+            {{ post.publishedAt | moment("dddd, MMMM Do YYYY") }}
+            <small v-if="post.edited"><font-awesome-icon icon="info-circle" size="1x"></font-awesome-icon> Edited</small>
+          </p>
         </div>
       </el-col>
     </el-row>
@@ -24,8 +31,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { editorOptions } from '@/utils/'
+import { VueEditor } from 'vue2-editor'
+import { mapState, mapActions } from 'vuex'
 export default {
+  components: {
+    VueEditor
+  },
+
   props: {
     post: {
       type: Object,
@@ -34,7 +47,10 @@ export default {
   },
 
   data () {
-    return {}
+    return {
+      editorOptions,
+      editMode: false
+    }
   },
 
   computed: {
@@ -47,6 +63,23 @@ export default {
     postsUserCount () {
       return Object.values(this.sourceData.posts).filter(post => post.userId === this.user['.key']).length
     }
+  },
+
+  methods: {
+   async submit (post) {
+     try {
+      await this.updatePost({
+        postId: post['.key'],
+        text: post.text
+      })
+      this.editMode = false
+     } catch (error) {
+      console.log(error)
+     }
+    },
+    ...mapActions([
+      'updatePost'
+    ])
   }
 }
 </script>

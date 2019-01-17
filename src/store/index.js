@@ -68,20 +68,26 @@ export default new Vuex.Store({
         commit('appentTopicToCategory', { topicId: key, categoryId })
         commit('appentTopicToUser', { topicId: key, userId })
         const post = await dispatch('savePost', { text, topicId: key })
-        console.log({ ...newTopic[key], firstPostId: post['.key'] })
         commit('udpateTopic', { ...newTopic[key], firstPostId: post['.key'] })
         return key
       } catch (error) {
         return error
       }
     },
-    async updateTopic ({ state, commit }, { title, text, topicId }) {
+    async updateTopic ({ state, commit, dispatch }, { title, text, topicId }) {
       try {
         const topic = state.sourceData.topics[topicId]
-        const firstPost = state.sourceData.posts[topic.firstPostId]
         commit('udpateTopic', { ...topic, title })
-        commit('udpatePost', { ...firstPost, text })
+        dispatch('updatePost', { postId: topic.firstPostId, text })
         return topic['.key']
+      } catch (error) {
+        return error
+      }
+    },
+    async updatePost ({ state, commit }, { postId, text }) {
+      try {
+        const post = state.sourceData.posts[postId]
+        commit('udpatePost', { ...post, text, edited: { at: new Date().getTime(), by: state.userId } })
       } catch (error) {
         return error
       }
