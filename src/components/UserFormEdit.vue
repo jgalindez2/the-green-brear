@@ -75,7 +75,6 @@ export default {
         if (valid) {
           this.$emit('submit', { ...this.activeUser })
         } else {
-          console.log('error submit!!')
           return false
         }
       })

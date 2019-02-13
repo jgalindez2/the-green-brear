@@ -4,15 +4,19 @@ import sourceData from '@/catalog/data'
 
 Vue.use(Vuex)
 
+const appendChildToParentMutation = ({ parent, child }) => {
+  return (state, { childId, parentId }) => {
+    const parentToAppend = state.sourceData[parent][parentId]
+    parentToAppend[child] = Object.assign({}, parentToAppend[child], { [childId]: childId })
+  }
+}
 export default new Vuex.Store({
   state: {
     sourceData,
     userId: '7uVPJS9GHoftN58Z2MXCYDqmNAh2'
   },
   getters: {
-    getUser (state) {
-      return state.sourceData.users[state.userId]
-    }
+    getUser: state => state.sourceData.users[state.userId]
   },
   mutations: {
     setTopic (state, topic) {
@@ -21,23 +25,11 @@ export default new Vuex.Store({
     setPost (state, post) {
       state.sourceData.posts = Object.assign({}, state.sourceData.posts, post)
     },
-    appendPostToTopic (state, { postId, topicId }) {
-      const topic = state.sourceData.topics[topicId]
-      topic.posts = Object.assign({}, topic.posts, { [postId]: postId })
-    },
-    appentPostToUser (state, { postId, userId }) {
-      const user = state.sourceData.users[userId]
-      user.posts = Object.assign({}, user.posts, { [postId]: postId })
-    },
-    appentTopicToCategory (state, { topicId, categoryId }) {
-      const category = state.sourceData.categories[categoryId]
-      category.topics = Object.assign({}, category.topics, { [topicId]: topicId })
-    },
-    appentTopicToUser (state, { topicId, userId }) {
-      const user = state.sourceData.users[userId]
-      user.topics = Object.assign({}, user.topics, { [topicId]: topicId })
-    },
-    setUser (state, user) {
+    appendPostToTopic: appendChildToParentMutation({ parent: 'topics', child: 'posts' }),
+    appendPostToUser: appendChildToParentMutation({ parent: 'users', child: 'posts' }),
+    appendTopicToCategory: appendChildToParentMutation({ parent: 'categories', child: 'topics' }),
+    appendTopicToUser: appendChildToParentMutation({ parent: 'users', child: 'topics' }),
+    updateUser (state, user) {
       Vue.set(state.sourceData.users, user['.key'], user)
     },
     udpateTopic (state, topic) {
@@ -60,13 +52,13 @@ export default new Vuex.Store({
             publishedAt,
             userId,
             views: 0,
-            lastPostId: "-Kvfw0huq0j2O00bOiWd",
+            lastPostId: '-Kvfw0huq0j2O00bOiWd',
             '.key': key
           }
         }
         commit('setTopic', newTopic)
-        commit('appentTopicToCategory', { topicId: key, categoryId })
-        commit('appentTopicToUser', { topicId: key, userId })
+        commit('appendTopicToCategory', { childId: key, parentId: categoryId })
+        commit('appendTopicToUser', { childId: key, parentId: userId })
         const post = await dispatch('savePost', { text, topicId: key })
         commit('udpateTopic', { ...newTopic[key], firstPostId: post['.key'] })
         return key
@@ -103,15 +95,15 @@ export default new Vuex.Store({
           }
         }
         context.commit('setPost', newPost)
-        context.commit('appendPostToTopic', { postId: key, topicId: post.topicId })
-        context.commit('appentPostToUser', { postId: key, userId: context.state.userId })
+        context.commit('appendPostToTopic', { childId: key, parentId: post.topicId })
+        context.commit('appendPostToUser', { childId: key, parentId: context.state.userId })
         return context.state.sourceData.posts[key]
       } catch (error) {
         return error
       }
     },
     editUser (context, user) {
-      context.commit('setUser', user)
+      context.commit('updateUser', user)
     }
   }
 })

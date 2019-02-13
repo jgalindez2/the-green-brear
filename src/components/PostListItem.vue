@@ -13,10 +13,12 @@
       <el-col :span="19">
         <div class="d-flex flex-column">
           <p v-if="!editMode" class="ml-3 mb-5 text-justify" v-html="post.text"></p>
-          <div v-else class="edit-mode">
+          <div v-else class="edit-mode mb-2">
             <vue-editor v-model="post.text" placeholder="Type your message here" :editorToolbar="editorOptions"></vue-editor>
-            <el-button @click="editMode = false" class="mt-2">Cancel</el-button>
-            <el-button class="mt-2" type="primary" @click="submit(post)">Update Post</el-button>
+            <div class="float-left">
+              <el-button @click="editMode = false" class="mt-2">Cancel</el-button>
+              <el-button class="mt-2" type="primary" @click="submit(post)">Update Post</el-button>
+            </div>
           </div>
           <p class="grey-color date-info ml-auto mt-auto">
             <font-awesome-icon v-if="!editMode" @click="editMode = true" icon="edit" size="1x" class="mr-3 link"></font-awesome-icon>

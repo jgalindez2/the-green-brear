@@ -1,6 +1,4 @@
-export const countObjectProperty = object => {
-  return Object.keys(object).length
-}
+export const countObjectProperty = object => object ? Object.keys(object).length : 0
 
 export const editorOptions = [
   ['bold', 'italic', 'underline', 'strike'],

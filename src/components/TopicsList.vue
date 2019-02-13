@@ -56,9 +56,11 @@ export default {
       }
     }
   },
+
   components: {
     TopicListItem
   },
+
   data () {
     return {
       paginate: ['topicsPaginate']

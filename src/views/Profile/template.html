@@ -14,7 +14,7 @@
             <h2 class="text-left">{{ user.username | capitalize }}'s recent activity</h2>
             <hr>
             <template v-if="posts.length !== 0">
-              <posts-list :posts="posts"></posts-list>
+              <posts-list :per="5" :posts="posts"></posts-list>
             </template>
             <template v-else>
               <h3 class="mt-4">You don't have any post yet.</h3>

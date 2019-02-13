@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     postsCount () {
-      return countObjectProperty(this.topic.posts) -1
+      return countObjectProperty(this.topic.posts) - 1
     },
     user () {
       return data.users[this.topic.userId]
