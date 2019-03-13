@@ -23,7 +23,7 @@ export default {
     category () {
       return Object.values(this.sourceData.categories).find(c => c['.key'] === this.categoryId)
     },
-    ...mapState ({
+    ...mapState({
       sourceData: state => state.sourceData
     })
   },
@@ -35,10 +35,10 @@ export default {
         text,
         categoryId: this.categoryId
       })
-      this.$router.push({ name: 'Topic', params: {id: topicId} })
+      this.$router.push({ name: 'Topic', params: { id: topicId } })
     },
     cancel () {
-      this.$router.push({ name: 'Topic', params: {id: topicId} })
+      this.$router.go(-1)
     },
     ...mapActions([
       'createTopic'

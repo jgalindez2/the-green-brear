@@ -68,16 +68,16 @@ export default {
   },
 
   methods: {
-   async submit (post) {
-     try {
-      await this.updatePost({
-        postId: post['.key'],
-        text: post.text
-      })
-      this.editMode = false
-     } catch (error) {
-      console.log(error)
-     }
+    async submit (post) {
+      try {
+        await this.updatePost({
+          postId: post['.key'],
+          text: post.text
+        })
+        this.editMode = false
+      } catch (error) {
+        console.log(error)
+      }
     },
     ...mapActions([
       'updatePost'

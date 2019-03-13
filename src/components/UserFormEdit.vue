@@ -50,7 +50,7 @@ export default {
   },
 
   data () {
-    return{
+    return {
       activeUser: { ...this.user },
       rules: {
         name: [

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import sourceData from '@/catalog/data'
+import firebase from 'firebase'
 
 Vue.use(Vuex)
 
@@ -13,22 +14,30 @@ const appendChildToParentMutation = ({ parent, child }) => {
 export default new Vuex.Store({
   state: {
     sourceData,
+    topic: null,
+    categories: null,
+    posts: null,
     userId: '7uVPJS9GHoftN58Z2MXCYDqmNAh2'
   },
   getters: {
     getUser: state => state.sourceData.users[state.userId]
   },
   mutations: {
-    setTopic (state, topic) {
+    setTopics (state, topic) {
       state.sourceData.topics = Object.assign({}, state.sourceData.topics, topic)
     },
     setPost (state, post) {
       state.sourceData.posts = Object.assign({}, state.sourceData.posts, post)
     },
-    appendPostToTopic: appendChildToParentMutation({ parent: 'topics', child: 'posts' }),
-    appendPostToUser: appendChildToParentMutation({ parent: 'users', child: 'posts' }),
-    appendTopicToCategory: appendChildToParentMutation({ parent: 'categories', child: 'topics' }),
-    appendTopicToUser: appendChildToParentMutation({ parent: 'users', child: 'topics' }),
+    setPosts (state, posts) {
+      state.posts = posts
+    },
+    setCategories (state, categories) {
+      state.categories = categories
+    },
+    setTopic (state, topic) {
+      state.topic = topic
+    },
     updateUser (state, user) {
       Vue.set(state.sourceData.users, user['.key'], user)
     },
@@ -37,9 +46,47 @@ export default new Vuex.Store({
     },
     udpatePost (state, post) {
       Vue.set(state.sourceData.posts, post['.key'], post)
-    }
+    },
+    appendPostToTopic: appendChildToParentMutation({ parent: 'topics', child: 'posts' }),
+    appendPostToUser: appendChildToParentMutation({ parent: 'users', child: 'posts' }),
+    appendTopicToCategory: appendChildToParentMutation({ parent: 'categories', child: 'topics' }),
+    appendTopicToUser: appendChildToParentMutation({ parent: 'users', child: 'topics' })
   },
   actions: {
+    async fetchTopic ({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        firebase.database().ref('topics').child(id).once('value', snapshot => {
+          const topic = { ...snapshot.val(), '.key': snapshot.key }
+          commit('setTopic', topic)
+          return resolve(topic)
+        })
+      })
+    },
+    async fetchCategories ({ commit }) {
+      return new Promise((resolve, reject) => {
+        firebase.database().ref('categories').once('value', snapshot => {
+          const categories = snapshot.val()
+          commit('setCategories', categories)
+          return resolve(categories)
+        })
+      })
+    },
+    async fetchPosts ({ commit }) {
+      return new Promise((resolve, reject) => {
+        firebase.database().ref('posts').once('value', snapshot => {
+          const posts = snapshot.val()
+          commit('setPosts', posts)
+          return resolve(posts)
+        })
+      })
+    },
+    async fetchTopicPosts ({ commit }, key) {
+      return new Promise((resolve, reject) => {
+        firebase.database().ref('posts').orderByChild('topicId').equalTo(key).once('value', snapshot => {
+          return resolve(Object.values(snapshot.val()))
+        })
+      })
+    },
     async createTopic ({ state, commit, dispatch }, { title, text, categoryId }) {
       try {
         const key = '_' + Math.random().toString(36).substr(2, 9)

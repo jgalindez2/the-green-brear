@@ -22,7 +22,7 @@ export default {
   components: {
     VueEditor
   },
-  
+
   props: {
     title: {
       type: String,

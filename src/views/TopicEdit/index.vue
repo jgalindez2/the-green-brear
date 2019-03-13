@@ -26,7 +26,7 @@ export default {
     firstPost () {
       return this.sourceData.posts[this.topic.firstPostId]
     },
-    ...mapState ({
+    ...mapState({
       sourceData: state => state.sourceData
     })
   },
@@ -38,10 +38,10 @@ export default {
         text,
         topicId: this.topicId
       })
-      this.$router.push({ name: 'Topic', params: {id: topicId} })
+      this.$router.push({ name: 'Topic', params: { id: topicId } })
     },
     cancel () {
-      this.$router.push({ name: 'Category', params: {slug: this.category.slug} })
+      this.$router.push({ name: 'Category', params: { slug: this.category.slug } })
     },
     ...mapActions([
       'updateTopic'

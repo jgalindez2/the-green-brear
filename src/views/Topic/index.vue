@@ -18,24 +18,28 @@ export default {
   },
 
   data () {
-    return {}
+    return {
+      topicPosts: null
+    }
   },
 
   computed: {
-    topic () {
-      return this.sourceData.topics[this.id]
+    firstDataLoaded () {
+      return this.categories && this.topic && this.topicPosts
     },
     categoryName () {
-      return this.sourceData.categories[this.topic.categoryId].name
+      return this.categories[this.topic.categoryId].name
     },
-    posts () {
-      const postIds = Object.values(this.topic.posts)
-      return Object.values(this.sourceData.posts)
-        .filter(post => postIds.includes(post['.key']))
-    },
-    ...mapState ({
-      sourceData: state => state.sourceData
-    })
+    ...mapState([
+      'categories',
+      'topic'
+    ])
+  },
+
+  async created () {
+    await this.fetchTopic(this.id)
+    await this.fetchCategories()
+    this.topicPosts = await this.fetchTopicPosts(this.id)
   },
 
   methods: {
@@ -47,7 +51,10 @@ export default {
       this.savePost(post)
     },
     ...mapActions([
-      'savePost'
+      'savePost',
+      'fetchTopic',
+      'fetchCategories',
+      'fetchTopicPosts'
     ])
   }
 }
