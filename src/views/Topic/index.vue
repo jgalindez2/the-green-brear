@@ -19,7 +19,8 @@ export default {
 
   data () {
     return {
-      topicPosts: null
+      topicPosts: null,
+      topic: null
     }
   },
 
@@ -31,15 +32,15 @@ export default {
       return this.categories[this.topic.categoryId].name
     },
     ...mapState([
-      'categories',
-      'topic'
+      'categories'
     ])
   },
 
   async created () {
-    await this.fetchTopic(this.id)
     await this.fetchCategories()
+    await this.fetchUsers()
     this.topicPosts = await this.fetchTopicPosts(this.id)
+    this.topic = await this.fetchTopic(this.id)
   },
 
   methods: {
@@ -53,6 +54,7 @@ export default {
     ...mapActions([
       'savePost',
       'fetchTopic',
+      'fetchUsers',
       'fetchCategories',
       'fetchTopicPosts'
     ])

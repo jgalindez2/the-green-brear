@@ -56,14 +56,15 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      sourceData: state => state.sourceData
-    }),
+    ...mapState([
+      'users',
+      'posts'
+    ]),
     user () {
-      return this.sourceData.users[this.post.userId]
+      return this.users[this.post.userId]
     },
     postsUserCount () {
-      return Object.values(this.sourceData.posts).filter(post => post.userId === this.user['.key']).length
+      return this.user.posts ? Object.values(this.user.posts).length : 0
     }
   },
 

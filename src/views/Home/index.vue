@@ -14,11 +14,11 @@ export default {
   },
   computed: {
     ...mapState({
-      topics: state => Object.values(state.sourceData.topics),
-      mostViewsTopics: state => Object.values(state.sourceData.topics)
+      topics: state => Object.values(state.topics),
+      mostViewsTopics: state => Object.values(state.topics)
         .sort((a, b) => b.views - a.views)
         .slice(0, 3),
-      recentTopics: state => Object.values(state.sourceData.topics)
+      recentTopics: state => Object.values(state.topics)
         .sort((a, b) => b.publishedAt - a.publishedAt).slice(0, 3)
     })
   }

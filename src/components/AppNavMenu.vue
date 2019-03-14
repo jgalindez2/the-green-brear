@@ -4,7 +4,7 @@
       <div class="brand-icon">
         <span>TGB</span>
       </div>
-      <el-submenu class="float-right" index="">
+      <el-submenu v-if="user" class="float-right" index="">
         <template slot="title"><img with="40" height="40" class="rounded" :src="user.avatar" alt=""></template>
         <el-menu-item index="/me">Profile</el-menu-item>
       </el-submenu>
