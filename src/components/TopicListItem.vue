@@ -3,10 +3,10 @@
     <el-row>
       <el-col :span="16" class="mb-2 pb-3">
         <div class="text-left d-flex">
-          <img class="rounded" :src="user.avatar" width="60" height="60" alt="">
+          <img v-if="user" class="rounded" :src="user.avatar" width="60" height="60" alt="">
           <div class="d-inline-block align-middle ml-3">
             <router-link tag="h2" class="mb-1 title" :to="{ name: 'Topic', params: { id: topic['.key'] } }"> {{ topic.title }} </router-link>
-            <span class="grey-color">
+            <span v-if="user" class="grey-color">
               <font-awesome-icon icon="user" size="1x" />
               {{ user.name }}
             </span>
@@ -32,8 +32,8 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 import { countObjectProperty } from '@/utils/'
-import data from '@/catalog/data.json'
 export default {
   props: {
     topic: {
@@ -45,12 +45,16 @@ export default {
     postsCount () {
       return countObjectProperty(this.topic.posts) - 1
     },
-    user () {
-      return data.users[this.topic.userId]
-    },
     lastUserReply () {
-      return data.users[data.posts[this.topic.lastPostId].userId]
-    }
+      return this.posts[this.topic.lastPostId] ? this.users[this.posts[this.topic.lastPostId].userId] : {}
+    },
+    ...mapGetters({
+      user: 'getUser'
+    }),
+    ...mapState([
+      'users',
+      'posts'
+    ])
   }
 }
 </script>

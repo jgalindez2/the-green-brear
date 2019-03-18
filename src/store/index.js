@@ -20,7 +20,9 @@ export default new Vuex.Store({
     userId: '7uVPJS9GHoftN58Z2MXCYDqmNAh2'
   },
   getters: {
-    getUser: state => state.users[state.userId]
+    getUser: state => {
+      return state.users[state.userId]
+    }
   },
   mutations: {
     setTopics (state, topic) {
@@ -60,7 +62,16 @@ export default new Vuex.Store({
   },
   actions: {
     async fetchTopic ({ dispatch }, id) {
-      return dispatch('fetchItem', { ref: 'topics', id })
+      return dispatch('fetchItemById', { ref: 'topics', id })
+    },
+    async fetchCategory ({ dispatch }, slug) {
+      return dispatch('fetchItemByName', { ref: 'categories', order: 'slug', value: slug })
+    },
+    async fetchTopicPosts ({ dispatch }, id) {
+      return dispatch('fetchItemByName', { ref: 'posts', order: 'topicId', value: id })
+    },
+    async fetchTopics ({ dispatch }) {
+      return dispatch('fetchItems', 'topics')
     },
     async fetchCategories ({ dispatch }) {
       return dispatch('fetchItems', 'categories')
@@ -71,14 +82,14 @@ export default new Vuex.Store({
     async fetchUsers ({ dispatch }) {
       return dispatch('fetchItems', 'users')
     },
-    async fetchTopicPosts ({ commit }, key) {
+    async fetchItemByName ({ commit }, { ref, order, value }) {
       return new Promise((resolve, reject) => {
-        firebase.database().ref('posts').orderByChild('topicId').equalTo(key).once('value', snapshot => {
-          return resolve(Object.values(snapshot.val()))
+        firebase.database().ref(ref).orderByChild(order).equalTo(value).once('value', snapshot => {
+          return resolve(snapshot.val())
         })
       })
     },
-    async fetchItem ({ commit }, { ref, id }) {
+    async fetchItemById ({ commit }, { ref, id }) {
       return new Promise((resolve, reject) => {
         firebase.database().ref(ref).child(id).once('value', snapshot => {
           const item = { ...snapshot.val(), '.key': snapshot.key }
@@ -90,6 +101,9 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         firebase.database().ref(ref).once('value', snapshot => {
           const items = snapshot.val()
+          for (const key in items) {
+            items[key] = { ...items[key], '.key': key }
+          }
           commit('setItems', { ref, items })
           return resolve(items)
         })

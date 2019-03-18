@@ -28,8 +28,8 @@ export default {
     firstDataLoaded () {
       return this.categories && this.topic && this.topicPosts
     },
-    categoryName () {
-      return this.categories[this.topic.categoryId].name
+    category () {
+      return this.categories[this.topic.categoryId]
     },
     ...mapState([
       'categories'
@@ -39,7 +39,8 @@ export default {
   async created () {
     await this.fetchCategories()
     await this.fetchUsers()
-    this.topicPosts = await this.fetchTopicPosts(this.id)
+    const posts = await this.fetchTopicPosts(this.id)
+    this.topicPosts = Object.values(posts)
     this.topic = await this.fetchTopic(this.id)
   },
 

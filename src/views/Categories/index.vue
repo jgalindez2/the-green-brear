@@ -1,7 +1,7 @@
 <template src="./template.html"></template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import CategoryList from '@/components/CategoryList'
 export default {
   components: {
@@ -9,8 +9,16 @@ export default {
   },
   computed: {
     ...mapState({
-      categories: state => Object.values(state.sourceData.categories)
+      categories: state => Object.values(state.categories)
     })
+  },
+  created () {
+    this.fetchCategories()
+  },
+  methods: {
+    ...mapActions([
+      'fetchCategories'
+    ])
   }
 }
 </script>
