@@ -9,7 +9,7 @@ I'm still under construction! [Visit me!](http://www.thegreenbear.surge.sh)
 
 This is a simple project to practice some new feature of vue and vuex, the reference was taked from Vue Js Master from [VueSchool](https://vueschool.io/courses/the-vuejs-master-class). I take the liberty to change and do new things, change the data model, and incorporate new views.
 
-I'm still under construction, so, let me know your suggestion and I hope you like the app It was made with :hearts: by me.
+I'm still under construction, so, let me know your suggestion.
 
 ## Getting Started
 
