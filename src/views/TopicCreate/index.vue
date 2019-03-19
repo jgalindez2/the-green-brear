@@ -15,38 +15,41 @@ export default {
     }
   },
 
-  data () {
-    return {}
-  },
-
   computed: {
     category () {
-      return Object.values(this.sourceData.categories).find(c => c['.key'] === this.categoryId)
+      return this.categories ? Object.values(this.categories).find(c => c['.key'] === this.categoryId) : {}
     },
-    ...mapState({
-      sourceData: state => state.sourceData
-    })
+    ...mapState([
+      'categories'
+    ])
+  },
+
+  created () {
+    this.fetchCategories()
   },
 
   methods: {
     async save ({ title, text }) {
-      const topicId = await this.createTopic({
-        title,
-        text,
-        categoryId: this.categoryId
-      })
-      this.$router.push({ name: 'Topic', params: { id: topicId } })
+      try {
+        const topic = await this.createTopic({
+          title,
+          text,
+          categoryId: this.categoryId
+        })
+        this.$router.push({ name: 'Topic', params: { id: topic['.key'] } }) 
+      } catch (error) {
+        console.log(error)
+      }
     },
     cancel () {
       this.$router.go(-1)
     },
     ...mapActions([
+      'fetchCategories',
       'createTopic'
     ])
   }
 }
 </script>
 
-<style lang="scss" src="./style.scss">
-
-</style>
+<style lang="scss" src="./style.scss"></style>

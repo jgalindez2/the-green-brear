@@ -1,7 +1,7 @@
 <div class="topic-create">
   <el-containter>
     <el-main>
-      <h1 class="text-left">Create a new topic in {{ category.name }}</h1>
+      <h1 v-if="category" class="text-left">Create a new topic in {{ category.name }}</h1>
       <el-card class="mx-auto">
         <topic-editor @save="save" @cancel="cancel"></topic-editor>
       </el-card>

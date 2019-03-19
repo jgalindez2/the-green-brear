@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 const appendChildToParentMutation = ({ parent, child }) => {
   return (state, { childId, parentId }) => {
-    const parentToAppend = state.sourceData[parent][parentId]
+    const parentToAppend = state[parent][parentId]
     parentToAppend[child] = Object.assign({}, parentToAppend[child], { [childId]: childId })
   }
 }
@@ -15,7 +15,7 @@ export default {
     state.posts = Object.assign({}, state.posts, post)
   },
   setItems (state, { ref, items }) {
-    state[ref] = items
+    state[ref] = Object.assign({}, state[ref], items)
   },
   setPosts (state, posts) {
     state.posts = posts

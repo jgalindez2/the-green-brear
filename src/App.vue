@@ -6,7 +6,11 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  created () {
+    const userId = this.$store.state.userId
+    this.$store.dispatch('fetchUser', userId)
+  }
 }
 </script>
 

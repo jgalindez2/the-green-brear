@@ -19,29 +19,34 @@ export default {
 
   data () {
     return {
-      topicPosts: null,
       topic: null
     }
   },
 
   computed: {
     firstDataLoaded () {
-      return this.categories && this.topic && this.topicPosts
+      return this.categories && this.topic && this.posts
     },
     category () {
       return this.categories[this.topic.categoryId]
     },
+    topicPosts () {
+      console.log('here updatgin')
+      const postIds = Object.values(this.topic.posts)
+      return Object.values(this.posts).filter(post => postIds.includes(post['.key']))
+    },
     ...mapState([
-      'categories'
+      'categories',
+      'posts'
     ])
   },
 
   async created () {
     await this.fetchCategories()
     await this.fetchUsers()
-    const posts = await this.fetchTopicPosts(this.id)
-    this.topicPosts = Object.values(posts)
-    this.topic = await this.fetchTopic(this.id)
+    await this.fetchTopicPosts(this.id)
+    const topic = await this.fetchTopic(this.id)
+    this.topic = topic[this.id]
   },
 
   methods: {
