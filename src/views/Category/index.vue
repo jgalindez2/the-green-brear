@@ -2,11 +2,13 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import asyncDataStatus from '@/mixins/asyncDataStatus'
 import TopicsList from '@/components/TopicsList'
 export default {
   components: {
     TopicsList
   },
+  mixins: [asyncDataStatus],
   props: {
     slug: {
       required: true,
@@ -20,8 +22,7 @@ export default {
   },
   computed: {
     categoryTopics () {
-      return this.category ? Object.values(this.topics)
-        .filter(topic => topic.categoryId === this.category['.key']) : []
+      return Object.values(this.topics)
     },
     ...mapState([
       'categories',
@@ -29,16 +30,17 @@ export default {
     ])
   },
   async created () {
-    await this.fetchTopics()
-    await this.fetchUsers()
-    await this.fetchPosts()
     const category = await this.fetchCategory(this.slug)
-    const key = Object.keys(category)[0]
-    const data = Object.values(category)[0]
-    this.category = { ...data, '.key': key }
+    const categoryKey = Object.keys(category)[0]
+    await this.fetchCategoryTopics(categoryKey)
+    await this.fetchPosts()
+    await this.fetchUsers()
+    this.category = this.categories[categoryKey]
+    this.asyncDataStatus_fetched()
   },
   methods: {
     ...mapActions([
+      'fetchCategoryTopics',
       'fetchCategory',
       'fetchTopics',
       'fetchUsers',

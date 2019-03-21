@@ -3,6 +3,7 @@
 <script>
 import { mapGetters, mapState, mapActions } from 'vuex'
 import { countObjectProperty } from '@/utils/'
+import asyncDataStatus from '@/mixins/asyncDataStatus'
 import UserInfoCard from '@/components/UserInfoCard'
 import UserFormEdit from '@/components/UserFormEdit'
 import PostsList from '@/components/PostsList'
@@ -12,46 +13,50 @@ export default {
     UserInfoCard,
     UserFormEdit
   },
-
+  mixins: [asyncDataStatus],
   props: {
     edit: {
       type: Boolean,
       default: false
     }
   },
-
   filters: {
     capitalize (value) {
       return value.substring(0, 1).toUpperCase() + value.slice(1)
     }
   },
-
   computed: {
     postsCount () {
-      return countObjectProperty(this.user.posts)
+      return this.asyncDataStatus_ready ? countObjectProperty(this.user.posts) : 0
     },
     topicsCount () {
-      return countObjectProperty(this.user.topics)
+      return this.asyncDataStatus_ready ? countObjectProperty(this.user.topics) : 0
     },
-    posts () {
-      return Object.values(this.sourceData.posts)
-        .filter(post => post.userId === this.user['.key'])
+    userPosts () {
+      return Object.values(this.posts)
     },
-    ...mapState({
-      sourceData: state => state.sourceData
-    }),
+    ...mapState([
+      'posts',
+      'userId'
+    ]),
     ...mapGetters({
       user: 'getUser'
     })
   },
-
+  async created () {
+    await this.fetchUser(this.userId)
+    await this.fetchPostsUser(this.user['.key'])
+    this.asyncDataStatus_fetched()
+  },
   methods: {
     saveUser (user) {
       this.editUser(user)
       this.$router.push('/me')
     },
     ...mapActions([
-      'editUser'
+      'editUser',
+      'fetchPostsUser',
+      'fetchUser'
     ])
   }
 }

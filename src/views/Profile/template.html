@@ -1,4 +1,4 @@
-<div class="user-profile">
+<div class="user-profile" v-if="asyncDataStatus_ready">
   <el-containter>
     <el-main>
       <el-row :gutter="10">
@@ -14,7 +14,7 @@
             <h2 class="text-left">{{ user.username | capitalize }}'s recent activity</h2>
             <hr>
             <template v-if="posts.length !== 0">
-              <posts-list :per="5" :posts="posts"></posts-list>
+              <posts-list :per="5" :posts="userPosts"></posts-list>
             </template>
             <template v-else>
               <h3 class="mt-4">You don't have any post yet.</h3>

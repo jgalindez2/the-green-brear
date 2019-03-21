@@ -2,6 +2,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import asyncDataStatus from '@/mixins/asyncDataStatus'
 import TopicsList from '@/components/TopicsList'
 import TopicNavbar from '@/components/TopicNavbar'
 export default {
@@ -9,6 +10,7 @@ export default {
     TopicsList,
     TopicNavbar
   },
+  mixins: [asyncDataStatus],
   computed: {
     ...mapState({
       topics: state => Object.values(state.topics),
@@ -24,6 +26,7 @@ export default {
     await this.fetchTopics()
     await this.fetchUsers()
     await this.fetchPosts()
+    this.asyncDataStatus_fetched()
   },
   methods: {
     ...mapActions([

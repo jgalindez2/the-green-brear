@@ -2,19 +2,19 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import asyncDataStatus from '@/mixins/asyncDataStatus'
 import TopicEditor from '@/components/TopicEditor'
 export default {
   components: {
     TopicEditor
   },
-
   props: {
     categoryId: {
       type: String,
       required: true
     }
   },
-
+  mixins: [asyncDataStatus],
   computed: {
     category () {
       return this.categories ? Object.values(this.categories).find(c => c['.key'] === this.categoryId) : {}
@@ -23,11 +23,10 @@ export default {
       'categories'
     ])
   },
-
-  created () {
-    this.fetchCategories()
+  async created () {
+    await this.fetchCategories()
+    this.asyncDataStatus_fetched()
   },
-
   methods: {
     async save ({ title, text }) {
       try {
@@ -36,7 +35,7 @@ export default {
           text,
           categoryId: this.categoryId
         })
-        this.$router.push({ name: 'Topic', params: { id: topic['.key'] } }) 
+        this.$router.push({ name: 'Topic', params: { id: topic['.key'] } })
       } catch (error) {
         console.log(error)
       }

@@ -2,6 +2,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import asyncDataStatus from '@/mixins/asyncDataStatus'
 import PostsList from '@/components/PostsList'
 import PostForm from '@/components/PostForm'
 export default {
@@ -9,24 +10,19 @@ export default {
     PostsList,
     PostForm
   },
-
+  mixins: [asyncDataStatus],
   props: {
     id: {
       type: String,
       required: true
     }
   },
-
   data () {
     return {
       topic: null
     }
   },
-
   computed: {
-    firstDataLoaded () {
-      return this.categories && this.topic && this.posts
-    },
     category () {
       return this.categories[this.topic.categoryId]
     },
@@ -36,18 +32,18 @@ export default {
     },
     ...mapState([
       'categories',
-      'posts'
+      'posts',
+      'topics'
     ])
   },
-
   async created () {
     await this.fetchCategories()
     await this.fetchUsers()
     await this.fetchTopicPosts(this.id)
     const topic = await this.fetchTopic(this.id)
     this.topic = topic[this.id]
+    this.asyncDataStatus_fetched()
   },
-
   methods: {
     saveNewPost (text) {
       const post = {

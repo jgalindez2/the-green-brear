@@ -1,5 +1,5 @@
 <div class="topic-create">
-  <el-containter v-if="topic && firstPost">
+  <el-containter v-if="asyncDataStatus_ready">
     <el-main>
       <h1 class="text-left">Update - {{ topic.title }}</h1>
       <el-card class="mx-auto">

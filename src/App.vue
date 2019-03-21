@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'app',
-  created () {
+  beforeCreate () {
     const userId = this.$store.state.userId
     this.$store.dispatch('fetchUser', userId)
   }

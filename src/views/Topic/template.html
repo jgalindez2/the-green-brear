@@ -1,5 +1,5 @@
 <div class="topic-view">
-  <el-container v-if="firstDataLoaded">
+  <el-container v-if="asyncDataStatus_ready">
     <el-main>
       <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>

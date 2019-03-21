@@ -2,18 +2,21 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import asyncDataStatus from '@/mixins/asyncDataStatus'
 import CategoryList from '@/components/CategoryList'
 export default {
   components: {
     CategoryList
   },
+  mixins: [asyncDataStatus],
   computed: {
     ...mapState({
       categories: state => Object.values(state.categories)
     })
   },
-  created () {
-    this.fetchCategories()
+  async created () {
+    await this.fetchCategories()
+    this.asyncDataStatus_fetched()
   },
   methods: {
     ...mapActions([

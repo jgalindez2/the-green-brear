@@ -2,19 +2,19 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import asyncDataStatus from '@/mixins/asyncDataStatus'
 import TopicEditor from '@/components/TopicEditor'
 export default {
   components: {
     TopicEditor
   },
-
   props: {
     topicId: {
       type: String,
       required: true
     }
   },
-
+  mixins: [asyncDataStatus],
   computed: {
     topic () {
       return Object.values(this.topics).find(t => t['.key'] === this.topicId)
@@ -27,12 +27,11 @@ export default {
       'posts'
     ])
   },
-
   async created () {
     await this.fetchTopic(this.topicId)
-    this.fetchPost(this.topic.firstPostId)
+    await this.fetchPost(this.topic.firstPostId)
+    this.asyncDataStatus_fetched()
   },
-
   methods: {
     async save ({ title, text }) {
       try {

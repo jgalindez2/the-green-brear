@@ -13,6 +13,12 @@ export default {
   async fetchTopicPosts ({ dispatch }, id) {
     return dispatch('fetchItemByName', { ref: 'posts', order: 'topicId', value: id })
   },
+  async fetchCategoryTopics ({ dispatch }, id) {
+    return dispatch('fetchItemByName', { ref: 'topics', order: 'categoryId', value: id })
+  },
+  async fetchPostsUser ({ dispatch }, id) {
+    return dispatch('fetchItemByName', { ref: 'posts', order: 'userId', value: id })
+  },
   async fetchTopics ({ dispatch }) {
     return dispatch('fetchItems', 'topics')
   },
