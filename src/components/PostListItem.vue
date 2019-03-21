@@ -56,16 +56,16 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      'users',
-      'posts'
-    ]),
     user () {
       return this.users[this.post.userId]
     },
     postsUserCount () {
       return this.user.posts ? Object.values(this.user.posts).length : 0
-    }
+    },
+    ...mapState([
+      'users',
+      'posts'
+    ])
   },
 
   methods: {

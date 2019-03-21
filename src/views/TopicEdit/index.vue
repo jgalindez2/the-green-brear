@@ -15,36 +15,40 @@ export default {
     }
   },
 
-  data () {
-    return {}
-  },
-
   computed: {
     topic () {
-      return Object.values(this.sourceData.topics).find(t => t['.key'] === this.topicId)
+      return Object.values(this.topics).find(t => t['.key'] === this.topicId)
     },
     firstPost () {
-      return this.sourceData.posts[this.topic.firstPostId]
+      return this.posts[this.topic.firstPostId]
     },
-    ...mapState({
-      sourceData: state => state.sourceData
-    })
+    ...mapState([
+      'topics',
+      'posts'
+    ])
+  },
+
+  async created () {
+    await this.fetchTopic(this.topicId)
+    this.fetchPost(this.topic.firstPostId)
   },
 
   methods: {
     async save ({ title, text }) {
-      const topicId = await this.updateTopic({
-        title,
-        text,
-        topicId: this.topicId
-      })
-      this.$router.push({ name: 'Topic', params: { id: topicId } })
+      try {
+        await this.updateTopic({ title, text, topicId: this.topicId })
+        this.$router.push({ name: 'Topic', params: { id: this.topicId } })
+      } catch (error) {
+        console.log(error)
+      }
     },
     cancel () {
       this.$router.push({ name: 'Category', params: { slug: this.category.slug } })
     },
     ...mapActions([
-      'updateTopic'
+      'updateTopic',
+      'fetchPost',
+      'fetchTopic'
     ])
   }
 }

@@ -31,7 +31,6 @@ export default {
       return this.categories[this.topic.categoryId]
     },
     topicPosts () {
-      console.log('here updatgin')
       const postIds = Object.values(this.topic.posts)
       return Object.values(this.posts).filter(post => postIds.includes(post['.key']))
     },

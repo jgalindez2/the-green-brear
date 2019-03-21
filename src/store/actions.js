@@ -4,6 +4,9 @@ export default {
   async fetchTopic ({ dispatch }, id) {
     return dispatch('fetchItemById', { ref: 'topics', id })
   },
+  async fetchPost ({ dispatch }, id) {
+    return dispatch('fetchItemById', { ref: 'posts', id })
+  },
   async fetchCategory ({ dispatch }, slug) {
     return dispatch('fetchItemByName', { ref: 'categories', order: 'slug', value: slug })
   },
@@ -118,22 +121,38 @@ export default {
       return Promise.reject(error)
     }
   },
-  async updateTopic ({ state, commit, dispatch }, { title, text, topicId }) {
+  async updateTopic ({ state, commit }, { title, text, topicId }) {
     try {
+      const edited = { at: new Date().getTime(), by: state.userId }
       const topic = state.topics[topicId]
-      commit('udpateTopic', { ...topic, title })
-      dispatch('updatePost', { postId: topic.firstPostId, text })
-      return topic['.key']
+      const postId = topic.firstPostId
+      const post = { ...state.posts[postId], text, edited }
+
+      const updates = {}
+      updates[`topics/${topicId}/title`] = title
+      updates[`posts/${postId}/text`] = text
+      updates[`posts/${postId}/edited`] = edited
+      await firebase.database().ref().update(updates)
+
+      commit('setItems', { ref: 'posts', items: { [postId]: { ...post, '.key': postId } } })
+      commit('setItems', { ref: 'topics', items: { [topicId]: { ...topic, '.key': topicId } } })
+      return Promise.resolve(topic)
     } catch (error) {
-      return error
+      return Promise.reject(error)
     }
   },
   async updatePost ({ state, commit }, { postId, text }) {
     try {
-      const post = state.posts[postId]
-      commit('udpatePost', { ...post, text, edited: { at: new Date().getTime(), by: state.userId } })
+      const edited = { at: new Date().getTime(), by: state.userId }
+      const post = { ...state.posts[postId], text, edited }
+
+      const updates = { text, edited }
+      await firebase.database().ref('posts').child(postId).update(updates)
+
+      commit('setItems', { ref: 'posts', items: { [postId]: { ...post, '.key': postId } } })
+      return Promise.resolve(post)
     } catch (error) {
-      return error
+      return Promise.reject(error)
     }
   },
   editUser (context, user) {
