@@ -27,6 +27,7 @@ export default {
     await this.fetchUsers()
     await this.fetchPosts()
     this.asyncDataStatus_fetched()
+    this.$emit('ready')
   },
   methods: {
     ...mapActions([

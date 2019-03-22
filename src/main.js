@@ -8,8 +8,15 @@ import './plugins/paginate.js'
 import i18n from './plugins/i18n'
 import firebase from 'firebase'
 import VueMoment from 'vue-moment'
+import VueProgressBar from 'vue-progressbar'
 
+Vue.use(VueProgressBar, {
+  color: '#738a73',
+  failedColor: 'red',
+  height: '2px'
+})
 Vue.use(VueMoment)
+
 Vue.config.debug = process.env.NODE_ENV === 'development'
 Vue.config.silent = process.env.NODE_ENV === 'production'
 Vue.config.devtools = true

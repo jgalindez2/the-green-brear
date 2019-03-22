@@ -1,26 +1,28 @@
-<div class="categories" v-if="asyncDataStatus_ready">
+<div class="categories">
   <el-main>
     <el-row class="pb-3" :gutter="10" justify="space-between">
-      <el-col :span="16">
-        <div class="header-title">
-          <p class="text-left"><b>Category</b></p>
-        </div>
-      </el-col>
-      <el-col :span="2">
-        <div class="header-title">
-          <p><b>Topics</b></p>
-        </div>
-      </el-col>
-      <el-col :span="2">
-        <div class="header-title">
-          <p><b>Posts</b></p>
-        </div>
-      </el-col>
-      <el-col :span="4">
-        <div class="header-title">
-          <p><b>Last post</b></p>
-        </div>
-      </el-col>
+      <template v-if="asyncDataStatus_ready">
+        <el-col :span="16">
+          <div class="header-title">
+            <p class="text-left"><b>Category</b></p>
+          </div>
+        </el-col>
+        <el-col :span="2">
+          <div class="header-title">
+            <p><b>Topics</b></p>
+          </div>
+        </el-col>
+        <el-col :span="2">
+          <div class="header-title">
+            <p><b>Posts</b></p>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="header-title">
+            <p><b>Last post</b></p>
+          </div>
+        </el-col>
+      </template>
     </el-row>
     <category-list :categories="categories"></category-list>
   </el-main>

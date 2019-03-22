@@ -26,6 +26,7 @@ export default {
   async created () {
     await this.fetchCategories()
     this.asyncDataStatus_fetched()
+    this.$emit('ready')
   },
   methods: {
     async save ({ title, text }) {

@@ -37,6 +37,7 @@ export default {
     await this.fetchUsers()
     this.category = this.categories[categoryKey]
     this.asyncDataStatus_fetched()
+    this.$emit('ready')
   },
   methods: {
     ...mapActions([

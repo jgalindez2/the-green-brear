@@ -44,9 +44,10 @@ export default {
     })
   },
   async created () {
-    await this.fetchUser(this.userId)
+    if (!this.user) await this.fetchUser(this.userId)
     await this.fetchPostsUser(this.user['.key'])
     this.asyncDataStatus_fetched()
+    this.$emit('ready')
   },
   methods: {
     saveUser (user) {

@@ -31,6 +31,7 @@ export default {
     await this.fetchTopic(this.topicId)
     await this.fetchPost(this.topic.firstPostId)
     this.asyncDataStatus_fetched()
+    this.$emit('ready')
   },
   methods: {
     async save ({ title, text }) {

@@ -1,29 +1,31 @@
-<div class="user-profile" v-if="asyncDataStatus_ready">
+<div class="user-profile">
   <el-containter>
     <el-main>
       <el-row :gutter="10">
-        <el-col :span="6">
-          <user-info-card
-            :editMode="edit"
-            :user="user"
-            :postsCount="postsCount"
-            :topicsCount="topicsCount" />
-        </el-col>
-        <el-col :span="18">
-          <template v-if="!edit">
-            <h2 class="text-left">{{ user.username | capitalize }}'s recent activity</h2>
-            <hr>
-            <template v-if="posts.length !== 0">
-              <posts-list :per="5" :posts="userPosts"></posts-list>
+        <template v-if="asyncDataStatus_ready">
+          <el-col :span="6">
+            <user-info-card
+              :editMode="edit"
+              :user="user"
+              :postsCount="postsCount"
+              :topicsCount="topicsCount" />
+          </el-col>
+          <el-col :span="18">
+            <template v-if="!edit">
+              <h2 class="text-left">{{ user.username | capitalize }}'s recent activity</h2>
+              <hr>
+              <template v-if="posts.length !== 0">
+                <posts-list :per="5" :posts="userPosts"></posts-list>
+              </template>
+              <template v-else>
+                <h3 class="mt-4">You don't have any post yet.</h3>
+              </template>
             </template>
             <template v-else>
-              <h3 class="mt-4">You don't have any post yet.</h3>
+              <user-form-edit @submit="saveUser" :user="user"></user-form-edit>
             </template>
-          </template>
-          <template v-else>
-            <user-form-edit @submit="saveUser" :user="user"></user-form-edit>
-          </template>
-        </el-col>
+          </el-col>
+        </template>
       </el-row>
     </el-main>
   </el-containter>

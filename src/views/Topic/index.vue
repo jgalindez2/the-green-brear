@@ -43,6 +43,7 @@ export default {
     const topic = await this.fetchTopic(this.id)
     this.topic = topic[this.id]
     this.asyncDataStatus_fetched()
+    this.$emit('ready')
   },
   methods: {
     saveNewPost (text) {

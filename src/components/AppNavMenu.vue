@@ -2,7 +2,7 @@
   <div class="nav-menu">
     <el-menu :default-active="$route.path" active-text-color="#738a73" :router="true" class="el-menu-demo fixed-top" mode="horizontal">
       <div class="brand-icon">
-        <span>TGB</span>
+        <router-link tag="span" :to="{name: 'Home'}">TGB</router-link>
       </div>
       <el-submenu v-if="user" class="float-right" index="">
         <template slot="title"><img with="40" height="40" class="rounded" :src="user.avatar" alt=""></template>
@@ -18,12 +18,6 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  props: {
-    categories: {
-      type: Array
-    }
-  },
-
   computed: {
     ...mapGetters({
       user: 'getUser'
@@ -48,10 +42,14 @@ export default {
       margin-left: 10px;
       color: #738a73;
       span{
+        cursor: pointer;
         font-size: 40px;
         letter-spacing: 10px;
         vertical-align: -23px;
         margin-left: 10px;
+      }
+      &:focus{
+        outline: none;
       }
     }
   }
