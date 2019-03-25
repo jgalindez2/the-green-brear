@@ -18,7 +18,6 @@
 import AppSpinner from '@/components/AppSpinner'
 import TheHeader from '@/components/TheHeader'
 import AppNavMenu from '@/components/AppNavMenu'
-import { mapState } from 'vuex'
 export default {
   components: {
     TheHeader,

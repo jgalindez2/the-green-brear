@@ -16,12 +16,16 @@ export default {
   },
   async created () {
     await this.fetchCategories()
+    await this.fetchTopics()
+    await this.fetchUsers()
     this.asyncDataStatus_fetched()
     this.$emit('ready')
   },
   methods: {
     ...mapActions([
-      'fetchCategories'
+      'fetchCategories',
+      'fetchTopics',
+      'fetchUsers'
     ])
   }
 }

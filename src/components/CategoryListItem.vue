@@ -26,13 +26,20 @@
 
 <script>
 import { countObjectProperty } from '@/utils/'
-import data from '@/catalog/data'
+import { mapState } from 'vuex'
 export default {
   props: {
     category: {
       type: Object,
       required: true
     }
+  },
+
+  computed: {
+    ...mapState([
+      'users',
+      'topics'
+    ])
   },
 
   methods: {
@@ -49,24 +56,24 @@ export default {
           return 'book-reader'
       }
     },
-    topics (key) {
-      return Object.values(data.topics)
+    topicsCategory (key) {
+      return Object.values(this.topics)
         .filter(topic => topic.categoryId === key)
     },
     topicsCount (category) {
       return countObjectProperty(category.topics)
     },
     postsCount (category) {
-      return this.topics(category['.key'])
+      return this.topicsCategory(category['.key'])
         .map(topic => Object.values(topic.posts).length)
         .reduce((total, num) => total + num)
     },
     lastUserReply (category) {
-      return Object.values(data.users)
+      return Object.values(this.users)
         .find(user => user['.key'] === this.lastPost(category).userId)
     },
     lastPost (category) {
-      return this.topics(category['.key'])
+      return this.topicsCategory(category['.key'])
         .sort((a, b) => a.lastPostAt - b.lastPostAt)[0]
     }
   }
