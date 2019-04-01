@@ -29,8 +29,11 @@ export default {
   setTopic (state, topic) {
     state.topic = topic
   },
-  updateUser (state, user) {
-    Vue.set(state.users, user['.key'], user)
+  setUser (state, user) {
+    state.user = user
+  },
+  setAuthId (state, id) {
+    state.userId = id
   },
   udpateTopic (state, topic) {
     Vue.set(state.topics, topic['.key'], topic)

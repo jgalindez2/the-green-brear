@@ -15,12 +15,20 @@ export default {
     }
   },
   mixins: [asyncDataStatus],
+  data () {
+    return {
+      edited: false
+    }
+  },
   computed: {
     topic () {
       return Object.values(this.topics).find(t => t['.key'] === this.topicId)
     },
     firstPost () {
       return this.posts[this.topic.firstPostId]
+    },
+    hasUnsaved () {
+      return (this.$refs.editor.form.title || this.$refs.editor.form.text) && !this.edited
     },
     ...mapState([
       'topics',
@@ -33,17 +41,26 @@ export default {
     this.asyncDataStatus_fetched()
     this.$emit('ready')
   },
+  beforeRouteLeave (to, from, next) {
+    if (this.hasUnsaved) {
+      const confirm = window.confirm('Do you want to leave?')
+      confirm ? next() : next(false)
+    } else {
+      next()
+    }
+  },
   methods: {
     async save ({ title, text }) {
       try {
         await this.updateTopic({ title, text, topicId: this.topicId })
+        this.edited = true
         this.$router.push({ name: 'Topic', params: { id: this.topicId } })
       } catch (error) {
         console.log(error)
       }
     },
     cancel () {
-      this.$router.push({ name: 'Category', params: { slug: this.category.slug } })
+      this.$router.push({ name: 'Topic', params: { id: this.topic['.key'] } })
     },
     ...mapActions([
       'updateTopic',

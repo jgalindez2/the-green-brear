@@ -22,7 +22,7 @@ export default new Router({
         name: 'EditTopic',
         path: 'topic/edit/:topicId',
         props: true,
-        component: () => import(/* webpackChunkName: "New-Topic" */ './views/TopicEdit/')
+        component: () => import(/* webpackChunkName: "Edit-Topic" */ './views/TopicEdit/')
       }, {
         name: 'Topic',
         path: 'topic/:id',
@@ -46,6 +46,14 @@ export default new Router({
         path: 'me/edit',
         props: { edit: true },
         component: () => import(/* webpackChunkName: "My-Profile" */ './views/Profile/')
+      }, {
+        name: 'Signup',
+        path: 'signup',
+        component: () => import(/* webpackChunkName: "Signup" */ './views/Signup/')
+      }, {
+        name: 'Signin',
+        path: 'signin',
+        component: () => import(/* webpackChunkName: "Signin" */ './views/Signin/')
       }]
     },
     {

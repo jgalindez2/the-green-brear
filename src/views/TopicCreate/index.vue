@@ -15,9 +15,17 @@ export default {
     }
   },
   mixins: [asyncDataStatus],
+  data () {
+    return {
+      saved: false
+    }
+  },
   computed: {
     category () {
       return this.categories ? Object.values(this.categories).find(c => c['.key'] === this.categoryId) : {}
+    },
+    hasUnsaved () {
+      return (this.$refs.editor.form.title || this.$refs.editor.form.text) && !this.saved
     },
     ...mapState([
       'categories'
@@ -28,6 +36,14 @@ export default {
     this.asyncDataStatus_fetched()
     this.$emit('ready')
   },
+  beforeRouteLeave (to, from, next) {
+    if (this.hasUnsaved) {
+      const confirm = window.confirm('Do you want to leave?')
+      confirm ? next() : next(false)
+    } else {
+      next()
+    }
+  },
   methods: {
     async save ({ title, text }) {
       try {
@@ -36,6 +52,7 @@ export default {
           text,
           categoryId: this.categoryId
         })
+        this.saved = true
         this.$router.push({ name: 'Topic', params: { id: topic['.key'] } })
       } catch (error) {
         console.log(error)

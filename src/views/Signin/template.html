@@ -1,0 +1,22 @@
+<el-container>
+  <el-main class="auth-form signin mt-4">
+    <el-card>
+      <h1 class="text-center">Login</h1>
+      <el-form label-position="top" label-width="50px" :model="form">
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <el-form-item label="Email">
+              <el-input placeholder="Enter your email" type="email" v-model="form.email"></el-input>
+            </el-form-item>
+            <el-form-item label="Password">
+              <el-input placeholder="Enter your password" type="password" v-model="form.password" show-password></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-button class="mt-4 btn-block btn-app" @click="signIn" round>Log in</el-button>
+        <br>
+        <el-button type="text"><router-link tag="span" class="green-color" :to="{name: 'Signup'}">Create an account?</router-link></el-button>
+      </el-form>
+    </el-card>
+  </el-main>
+</el-container>

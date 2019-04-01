@@ -34,6 +34,11 @@ export default {
   async fetchUser ({ dispatch }, id) {
     return dispatch('fetchItemById', { ref: 'users', id })
   },
+  async fetchAuthUser ({ commit, dispatch }) {
+    const userId = await firebase.auth().currentUser.uid
+    commit('setAuthId', userId)
+    dispatch('fetchUser', userId)
+  },
   async fetchItemByName ({ commit }, { ref, order, value }) {
     return new Promise((resolve, reject) => {
       firebase.database().ref(ref).orderByChild(order).equalTo(value).once('value', snapshot => {
@@ -104,14 +109,14 @@ export default {
       return Promise.resolve(error)
     }
   },
-  async savePost (context, post) {
+  async savePost ({ state, commit }, post) {
     try {
       const key = firebase.database().ref('posts').push().key
       const publishedAt = new Date().getTime()
       const newPost = {
         ...post,
         publishedAt,
-        userId: context.state.userId
+        userId: state.userId
       }
       const updates = {}
       updates[`posts/${key}`] = newPost
@@ -119,10 +124,48 @@ export default {
       updates[`users/${newPost.userId}/posts/${key}`] = key
       await firebase.database().ref().update(updates)
 
-      context.commit('setItems', { ref: 'posts', items: { [key]: { ...newPost, '.key': key } } })
-      context.commit('appendPostToTopic', { childId: key, parentId: post.topicId })
-      context.commit('appendPostToUser', { childId: key, parentId: context.state.userId })
-      return Promise.resolve(context.state.posts[key])
+      commit('setItems', { ref: 'posts', items: { [key]: { ...newPost, '.key': key } } })
+      commit('appendPostToTopic', { childId: key, parentId: post.topicId })
+      commit('appendPostToUser', { childId: key, parentId: state.userId })
+      return Promise.resolve(state.posts[key])
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async signInWithEmailAndPassword (context, { email, password }) {
+    try {
+      const { user } = await firebase.auth().signInWithEmailAndPassword(email, password)
+      return Promise.resolve(user)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async signOut ({ commit }) {
+    try {
+      await firebase.auth().signOut()
+      commit('setAuthId', null)
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async registerUserWithEmailAndPassword ({ dispatch }, { name, email, password, username, avatar = null }) {
+    try {
+      const { user } = await firebase.auth().createUserWithEmailAndPassword(email, password)
+      dispatch('createUser', { id: user.uid, name, email, username, avatar, password })
+      return Promise.resolve(user)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  },
+  async createUser ({ state, commit }, { id, name, email, username, password, avatar = null }) {
+    try {
+      const registerAt = new Date().getTime()
+      const usernameLower = username.toLowerCase()
+      const user = { name, email, username, avatar, password, registerAt, usernameLower }
+      await firebase.database().ref('users').child(id).set(user)
+      commit('setItems', { ref: 'users', items: { [id]: { ...user, '.key': id } } })
+      return Promise.resolve(state.users[id])
     } catch (error) {
       return Promise.reject(error)
     }

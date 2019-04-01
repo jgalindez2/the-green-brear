@@ -1,5 +1,5 @@
 export default {
   getUser: state => {
-    return state.users[state.userId]
+    return state.userId ? state.users[state.userId] : null
   }
 }

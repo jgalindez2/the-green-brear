@@ -2,6 +2,10 @@ h1{
   font-size: 35px;
 }
 
+button, a, span, button:focus{
+  outline: 0 !important;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -14,7 +18,16 @@ h1{
   .grey-color {
     color: $gray;
   }
+  .btn-app{
+    border-color: $themecolor;
+    color: $themecolor;
+    &:hover{
+      background-color: $themecolor;
+      color: white;
+    }
+  }
 }
+
 
 .header-title{
   border-bottom: 2px solid $themecolor;
@@ -22,4 +35,19 @@ h1{
 
 .link{
   cursor: pointer;
+}
+
+.auth-form{
+  display: flex !important;
+  justify-content: center;
+  .el-form{
+    width: 500px;
+    .el-form-item{
+      margin-bottom: 10px;
+      text-align: left;
+      .el-form-item__label{
+        padding: 0;
+      } 
+    }
+  }
 }

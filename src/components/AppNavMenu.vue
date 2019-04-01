@@ -7,21 +7,30 @@
       <el-submenu v-if="user" class="float-right" index="">
         <template slot="title"><img with="40" height="40" class="rounded" :src="user.avatar" alt=""></template>
         <el-menu-item index="/me">Profile</el-menu-item>
+        <el-menu-item index="" @click="signOut">Sign out</el-menu-item>
       </el-submenu>
+      <template v-else>
+        <el-menu-item class="float-right" index="/signin">Sign In</el-menu-item>
+        <el-menu-item class="float-right" index="/signup">Sign Up</el-menu-item>
+      </template>
       <el-menu-item class="float-right" index="/categories">Categories</el-menu-item>
-      <!-- <el-menu-item class="float-right" index="/about">Unanswered Topics</el-menu-item> -->
       <el-menu-item class="float-right" index="/">Home</el-menu-item>
     </el-menu>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
       user: 'getUser'
     })
+  },
+  methods: {
+    ...mapActions([
+      'signOut'
+    ])
   }
 }
 </script>

@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import { countObjectProperty } from '@/utils/'
 export default {
   props: {
@@ -42,15 +42,15 @@ export default {
     }
   },
   computed: {
+    user () {
+      return this.users[this.topic.userId]
+    },
     postsCount () {
       return countObjectProperty(this.topic.posts) - 1
     },
     lastUserReply () {
       return this.posts[this.topic.lastPostId] ? this.users[this.posts[this.topic.lastPostId].userId] : {}
     },
-    ...mapGetters({
-      user: 'getUser'
-    }),
     ...mapState([
       'users',
       'posts'
