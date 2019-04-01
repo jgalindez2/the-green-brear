@@ -4,7 +4,7 @@ import store from './store/index'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -41,11 +41,13 @@ export default new Router({
       }, {
         name: 'Profile',
         path: 'me',
+        meta: { requiresAuth: true },
         component: () => import(/* webpackChunkName: "Profile" */ './views/Profile/')
       }, {
         name: 'MyProfile',
         path: 'me/edit',
         props: { edit: true },
+        meta: { requiresAuth: true },
         component: () => import(/* webpackChunkName: "My-Profile" */ './views/Profile/')
       }, {
         name: 'Signup',
@@ -71,3 +73,13 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(route => route.meta.requiresAuth)) {
+    store.state.authId ? next() : next({ name: 'Home' })
+  } else {
+    next()
+  }
+})
+
+export default router
