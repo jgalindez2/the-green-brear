@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store/index'
 
 Vue.use(Router)
 
@@ -54,6 +55,13 @@ export default new Router({
         name: 'Signin',
         path: 'signin',
         component: () => import(/* webpackChunkName: "Signin" */ './views/Signin/')
+      }, {
+        name: 'Signout',
+        path: '/logout',
+        async beforeEnter (to, from, next) {
+          await store.dispatch('signOut')
+          next({ name: 'Home' })
+        }
       }]
     },
     {
