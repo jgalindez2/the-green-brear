@@ -44,6 +44,7 @@ export default {
     })
   },
   async created () {
+    console.log('here')
     if (!this.user) await this.fetchUser(this.userId)
     await this.fetchPostsUser(this.user['.key'])
     this.asyncDataStatus_fetched()

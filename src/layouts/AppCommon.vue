@@ -4,7 +4,7 @@
       <app-nav-menu/>
       <transition-group name="fade" mode="out-in" appear>
         <the-header key="app-header"/>
-        <router-view key="router-view" @ready="setReadyPage"/>
+        <router-view :key="$route.path" @ready="setReadyPage"/>
       </transition-group>
     </template>
     <div v-show="!showPage">

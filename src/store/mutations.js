@@ -15,6 +15,10 @@ export default {
     state.posts = Object.assign({}, state.posts, post)
   },
   setItems (state, { ref, items }) {
+    if (!items) {
+      state[ref] = {}
+      return
+    }
     state[ref] = Object.assign({}, state[ref], items)
   },
   setPosts (state, posts) {
@@ -40,6 +44,9 @@ export default {
   },
   udpatePost (state, post) {
     Vue.set(state.posts, post['.key'], post)
+  },
+  setUnsubscribeAuthObserver (state, unsubscribe) {
+    state.unsubscribeAuthObserver = unsubscribe
   },
   appendPostToTopic: appendChildToParentMutation({ parent: 'topics', child: 'posts' }),
   appendPostToUser: appendChildToParentMutation({ parent: 'users', child: 'posts' }),

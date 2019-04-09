@@ -16,11 +16,13 @@ const router = new Router({
         component: () => import(/* webpackChunkName: "Home" */ './views/Home/')
       }, {
         name: 'NewTopic',
+        meta: { requiresAuth: true },
         path: 'topic/create/:categoryId',
         props: true,
         component: () => import(/* webpackChunkName: "New-Topic" */ './views/TopicCreate/')
       }, {
         name: 'EditTopic',
+        meta: { requiresAuth: true },
         path: 'topic/edit/:topicId',
         props: true,
         component: () => import(/* webpackChunkName: "Edit-Topic" */ './views/TopicEdit/')
@@ -52,14 +54,17 @@ const router = new Router({
       }, {
         name: 'Signup',
         path: 'signup',
+        meta: { requiresGuest: true },
         component: () => import(/* webpackChunkName: "Signup" */ './views/Signup/')
       }, {
         name: 'Signin',
         path: 'signin',
+        meta: { requiresGuest: true },
         component: () => import(/* webpackChunkName: "Signin" */ './views/Signin/')
       }, {
         name: 'Signout',
         path: '/logout',
+        meta: { requiresAuth: true },
         async beforeEnter (to, from, next) {
           await store.dispatch('signOut')
           next({ name: 'Home' })
@@ -75,11 +80,24 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(route => route.meta.requiresAuth)) {
-    store.state.authId ? next() : next({ name: 'Home' })
-  } else {
-    next()
-  }
+  store.dispatch('initAuthentication')
+    .then(user => {
+      if (to.matched.some(route => route.meta.requiresAuth)) {
+        if (user) {
+          next()
+        } else {
+          next({ name: 'Signin', query: { redirectTo: to.path } })
+        }
+      } else if (to.matched.some(route => route.meta.requiresGuest)) {
+        if (!user) {
+          next()
+        } else {
+          next({ name: 'Home' })
+        }
+      } else {
+        next()
+      }
+    })
 })
 
 export default router

@@ -1,7 +1,7 @@
 <template src="./template.html"></template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import asyncDataStatus from '@/mixins/asyncDataStatus'
 import PostsList from '@/components/PostsList'
 import PostForm from '@/components/PostForm'
@@ -30,6 +30,9 @@ export default {
       const postIds = Object.values(this.topic.posts)
       return Object.values(this.posts).filter(post => postIds.includes(post['.key']))
     },
+    ...mapGetters({
+      user: 'getUser'
+    }),
     ...mapState([
       'categories',
       'posts',

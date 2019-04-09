@@ -8,3 +8,13 @@ export const editorOptions = [
   [{ 'font': [] }],
   [{ 'align': [] }]
 ]
+
+export const removeEmptyData = obj => {
+  const objCopy = { ...obj }
+  Object.keys(objCopy).forEach(key => {
+    if (!objCopy[key]) {
+      delete objCopy[key]
+    }
+  })
+  return objCopy
+}

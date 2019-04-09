@@ -21,7 +21,7 @@
             </div>
           </div>
           <p class="grey-color date-info ml-auto mt-auto">
-            <font-awesome-icon v-if="!editMode" @click="editMode = true" icon="edit" size="1x" class="mr-3 link"></font-awesome-icon>
+            <font-awesome-icon v-if="!editMode && authUser" @click="editMode = true" icon="edit" size="1x" class="mr-3 link"></font-awesome-icon>
             <font-awesome-icon  icon="calendar-alt" size="1x" />
             {{ post.publishedAt | moment("dddd, MMMM Do YYYY") }}
             <small v-if="post.edited"><font-awesome-icon icon="info-circle" size="1x"></font-awesome-icon> Edited</small>
@@ -35,7 +35,7 @@
 <script>
 import { editorOptions } from '@/utils/'
 import { VueEditor } from 'vue2-editor'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   components: {
     VueEditor
@@ -62,6 +62,9 @@ export default {
     postsUserCount () {
       return this.user.posts ? Object.values(this.user.posts).length : 0
     },
+    ...mapGetters({
+      authUser: 'getUser'
+    }),
     ...mapState([
       'users',
       'posts'

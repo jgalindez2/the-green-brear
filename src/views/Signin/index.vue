@@ -16,12 +16,17 @@ export default {
   },
   methods: {
     async signIn () {
+      console.log(this.form)
       try {
         await this.signInWithEmailAndPassword(this.form)
-        this.$router.push('/')
+        this.successRedirect()
       } catch (error) {
         alert(`Something went wrong: ${error}`)
       }
+    },
+    successRedirect () {
+      const redirectTo = this.$route.query.redirectTo || { name: 'Home' }
+      this.$router.push(redirectTo)
     },
     ...mapActions([
       'signInWithEmailAndPassword'

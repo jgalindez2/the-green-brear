@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import { removeEmptyData } from '../utils/'
 
 export default {
   async fetchTopic ({ dispatch }, id) {
@@ -35,9 +36,21 @@ export default {
     return dispatch('fetchItemById', { ref: 'users', id })
   },
   async fetchAuthUser ({ commit, dispatch }) {
-    const userId = await firebase.auth().currentUser.uid
-    commit('setAuthId', userId)
-    dispatch('fetchUser', userId)
+    const userId = firebase.auth().currentUser.uid
+    return new Promise((resolve, reject) => {
+      // check if user exists in the database
+      firebase.database().ref('users').child(userId).once('value', snapshot => {
+        if (snapshot.exists()) {
+          return dispatch('fetchUser', userId)
+            .then(user => {
+              commit('setAuthId', userId)
+              resolve(user)
+            })
+        } else {
+          resolve(null)
+        }
+      })
+    })
   },
   async fetchItemByName ({ commit }, { ref, order, value }) {
     return new Promise((resolve, reject) => {
@@ -149,6 +162,19 @@ export default {
       return Promise.reject(error)
     }
   },
+  initAuthentication ({ dispatch, commit, state }) {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          dispatch('fetchAuthUser')
+            .then(dbUser => resolve(dbUser))
+        } else {
+          resolve(null)
+        }
+      })
+      commit('setUnsubscribeAuthObserver', unsubscribe)
+    })
+  },
   async registerUserWithEmailAndPassword ({ dispatch }, { name, email, password, username, avatar = null }) {
     try {
       const { user } = await firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -205,6 +231,21 @@ export default {
     }
   },
   editUser (context, user) {
-    context.commit('updateUser', user)
+    try {
+      const attrsUpdate = {
+        avatar: user.avatar,
+        username: user.username,
+        name: user.name,
+        bio: user.bio,
+        website: user.website,
+        email: user.email,
+        location: user.location
+      }
+      firebase.database().ref('users').child(user['.key']).update(removeEmptyData(attrsUpdate))
+      context.commit('setUser', user)
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 }
