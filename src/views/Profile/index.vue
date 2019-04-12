@@ -35,30 +35,28 @@ export default {
     userPosts () {
       return Object.values(this.posts)
     },
-    ...mapState([
-      'posts',
-      'userId'
-    ]),
+    ...mapState({
+      posts: state => state.posts.items
+    }),
     ...mapGetters({
-      user: 'getUser'
+      user: 'auth/getUser'
     })
   },
   async created () {
-    console.log('here')
-    if (!this.user) await this.fetchUser(this.userId)
-    await this.fetchPostsUser(this.user['.key'])
+    if (!this.user) await this['users/fetchUser'](this.user['.key'])
+    await this['posts/fetchPostsUser'](this.user['.key'])
     this.asyncDataStatus_fetched()
     this.$emit('ready')
   },
   methods: {
     saveUser (user) {
-      this.editUser(user)
+      this['users/editUser'](user)
       this.$router.push('/me')
     },
     ...mapActions([
-      'editUser',
-      'fetchPostsUser',
-      'fetchUser'
+      'posts/fetchPostsUser',
+      'users/editUser',
+      'users/fetchUser'
     ])
   }
 }

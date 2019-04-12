@@ -36,10 +36,10 @@ export default {
   },
 
   computed: {
-    ...mapState([
-      'users',
-      'topics'
-    ])
+    ...mapState({
+      users: state => state.users.items,
+      topics: state => state.topics.items
+    })
   },
 
   methods: {

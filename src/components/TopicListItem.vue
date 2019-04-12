@@ -51,10 +51,10 @@ export default {
     lastUserReply () {
       return this.posts[this.topic.lastPostId] ? this.users[this.posts[this.topic.lastPostId].userId] : {}
     },
-    ...mapState([
-      'users',
-      'posts'
-    ])
+    ...mapState({
+      posts: state => state.posts.items,
+      users: state => state.users.items
+    })
   }
 }
 </script>

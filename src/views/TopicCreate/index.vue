@@ -27,12 +27,12 @@ export default {
     hasUnsaved () {
       return (this.$refs.editor.form.title || this.$refs.editor.form.text) && !this.saved
     },
-    ...mapState([
-      'categories'
-    ])
+    ...mapState({
+      categories: state => state.categories.items
+    })
   },
   async created () {
-    await this.fetchCategories()
+    await this['categories/fetchCategories']()
     this.asyncDataStatus_fetched()
     this.$emit('ready')
   },
@@ -47,7 +47,7 @@ export default {
   methods: {
     async save ({ title, text }) {
       try {
-        const topic = await this.createTopic({
+        const topic = await this['topics/createTopic']({
           title,
           text,
           categoryId: this.categoryId
@@ -62,8 +62,8 @@ export default {
       this.$router.go(-1)
     },
     ...mapActions([
-      'fetchCategories',
-      'createTopic'
+      'categories/fetchCategories',
+      'topics/createTopic'
     ])
   }
 }

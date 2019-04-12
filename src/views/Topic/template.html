@@ -16,7 +16,7 @@
         <template v-if="user">
           <post-form @submit="saveNewPost"></post-form>
         </template>
-        <template>
+        <template v-else>
           <div class="text-center mt-3">
             <router-link :to="{ name: 'Signin' }">Singin</router-link> or 
             <router-link :to="{ name: 'Signup' }">Register</router-link> to reply.

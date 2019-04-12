@@ -16,9 +16,8 @@ export default {
   },
   methods: {
     async signIn () {
-      console.log(this.form)
       try {
-        await this.signInWithEmailAndPassword(this.form)
+        await this['auth/signInWithEmailAndPassword'](this.form)
         this.successRedirect()
       } catch (error) {
         alert(`Something went wrong: ${error}`)
@@ -29,7 +28,7 @@ export default {
       this.$router.push(redirectTo)
     },
     ...mapActions([
-      'signInWithEmailAndPassword'
+      'auth/signInWithEmailAndPassword'
     ])
   }
 }

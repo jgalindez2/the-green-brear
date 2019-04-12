@@ -63,12 +63,12 @@ export default {
       return this.user.posts ? Object.values(this.user.posts).length : 0
     },
     ...mapGetters({
-      authUser: 'getUser'
+      authUser: 'auth/getUser'
     }),
-    ...mapState([
-      'users',
-      'posts'
-    ])
+    ...mapState({
+      users: state => state.users.items,
+      posts: state => state.posts.items
+    })
   },
 
   methods: {
@@ -83,9 +83,7 @@ export default {
         console.log(error)
       }
     },
-    ...mapActions([
-      'updatePost'
-    ])
+    ...mapActions('posts', ['updatePost'])
   }
 }
 </script>

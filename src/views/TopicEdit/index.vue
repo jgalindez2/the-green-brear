@@ -30,14 +30,14 @@ export default {
     hasUnsaved () {
       return (this.$refs.editor.form.title || this.$refs.editor.form.text) && !this.edited
     },
-    ...mapState([
-      'topics',
-      'posts'
-    ])
+    ...mapState({
+      topics: state => state.topics.items,
+      posts: state => state.posts.items
+    })
   },
   async created () {
-    await this.fetchTopic(this.topicId)
-    await this.fetchPost(this.topic.firstPostId)
+    await this['topics/fetchTopic'](this.topicId)
+    await this['posts/fetchPost'](this.topic.firstPostId)
     this.asyncDataStatus_fetched()
     this.$emit('ready')
   },
@@ -52,7 +52,7 @@ export default {
   methods: {
     async save ({ title, text }) {
       try {
-        await this.updateTopic({ title, text, topicId: this.topicId })
+        await this['topics/updateTopic']({ title, text, topicId: this.topicId })
         this.edited = true
         this.$router.push({ name: 'Topic', params: { id: this.topicId } })
       } catch (error) {
@@ -63,9 +63,9 @@ export default {
       this.$router.push({ name: 'Topic', params: { id: this.topic['.key'] } })
     },
     ...mapActions([
-      'updateTopic',
-      'fetchPost',
-      'fetchTopic'
+      'posts/fetchPost',
+      'topics/updateTopic',
+      'topics/fetchTopic'
     ])
   }
 }

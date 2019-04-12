@@ -31,19 +31,19 @@ export default {
       return Object.values(this.posts).filter(post => postIds.includes(post['.key']))
     },
     ...mapGetters({
-      user: 'getUser'
+      user: 'auth/getUser'
     }),
-    ...mapState([
-      'categories',
-      'posts',
-      'topics'
-    ])
+    ...mapState({
+      categories: state => state.categories.items,
+      posts: state => state.posts.items,
+      topics: state => state.topics.items
+    })
   },
   async created () {
-    await this.fetchCategories()
-    await this.fetchUsers()
-    await this.fetchTopicPosts(this.id)
-    const topic = await this.fetchTopic(this.id)
+    await this['categories/fetchCategories']()
+    await this['users/fetchUsers']()
+    await this['posts/fetchTopicPosts'](this.id)
+    const topic = await this['topics/fetchTopic'](this.id)
     this.topic = topic[this.id]
     this.asyncDataStatus_fetched()
     this.$emit('ready')
@@ -54,14 +54,14 @@ export default {
         text,
         topicId: this.id
       }
-      this.savePost(post)
+      this['posts/savePost'](post)
     },
     ...mapActions([
-      'savePost',
-      'fetchTopic',
-      'fetchUsers',
-      'fetchCategories',
-      'fetchTopicPosts'
+      'topics/fetchTopic',
+      'users/fetchUsers',
+      'posts/fetchTopicPosts',
+      'posts/savePost',
+      'categories/fetchCategories'
     ])
   }
 }

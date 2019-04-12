@@ -36,7 +36,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      user: 'getUser'
+      user: 'auth/getUser'
     }),
     userPostsLength () {
       return countObjectProperty(this.user.posts)

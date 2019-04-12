@@ -24,13 +24,11 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      user: 'getUser'
+      user: 'auth/getUser'
     })
   },
   methods: {
-    ...mapActions([
-      'signOut'
-    ])
+    ...mapActions('auth', ['signOut'])
   }
 }
 </script>

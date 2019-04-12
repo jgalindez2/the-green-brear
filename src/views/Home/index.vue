@@ -13,27 +13,27 @@ export default {
   mixins: [asyncDataStatus],
   computed: {
     ...mapState({
-      topics: state => Object.values(state.topics),
-      mostViewsTopics: state => Object.values(state.topics)
+      topics: state => Object.values(state.topics.items),
+      mostViewsTopics: state => Object.values(state.topics.items)
         .sort((a, b) => b.views - a.views)
         .slice(0, 3),
-      recentTopics: state => Object.values(state.topics)
+      recentTopics: state => Object.values(state.topics.items)
         .sort((a, b) => b.publishedAt - a.publishedAt)
         .slice(0, 3)
     })
   },
   async created () {
-    await this.fetchTopics()
-    await this.fetchUsers()
-    await this.fetchPosts()
+    await this['topics/fetchTopics']()
+    await this['users/fetchUsers']()
+    await this['posts/fetchPosts']()
     this.asyncDataStatus_fetched()
     this.$emit('ready')
   },
   methods: {
     ...mapActions([
-      'fetchTopics',
-      'fetchUsers',
-      'fetchPosts'
+      'posts/fetchPosts',
+      'topics/fetchTopics',
+      'users/fetchUsers'
     ])
   }
 }

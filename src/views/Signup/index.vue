@@ -20,14 +20,14 @@ export default {
   methods: {
     async signUp () {
       try {
-        await this.registerUserWithEmailAndPassword(this.form)
+        await this['auth/registerUserWithEmailAndPassword'](this.form)
         this.$router.push('/')
       } catch (error) {
         console.log(error)
       }
     },
     ...mapActions([
-      'registerUserWithEmailAndPassword'
+      'auth/registerUserWithEmailAndPassword'
     ])
   }
 }

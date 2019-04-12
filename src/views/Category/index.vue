@@ -24,28 +24,28 @@ export default {
     categoryTopics () {
       return Object.values(this.topics)
     },
-    ...mapState([
-      'categories',
-      'topics'
-    ])
+    ...mapState({
+      categories: state => state.categories.items,
+      topics: state => state.topics.items
+    })
   },
   async created () {
-    const category = await this.fetchCategory(this.slug)
+    const category = await this['categories/fetchCategory'](this.slug)
     const categoryKey = Object.keys(category)[0]
-    await this.fetchCategoryTopics(categoryKey)
-    await this.fetchPosts()
-    await this.fetchUsers()
+    await this['categories/fetchCategoryTopics'](categoryKey)
+    await this['posts/fetchPosts']()
+    await this['users/fetchUsers']()
     this.category = this.categories[categoryKey]
     this.asyncDataStatus_fetched()
     this.$emit('ready')
   },
   methods: {
     ...mapActions([
-      'fetchCategoryTopics',
-      'fetchCategory',
-      'fetchTopics',
-      'fetchUsers',
-      'fetchPosts'
+      'categories/fetchCategoryTopics',
+      'categories/fetchCategory',
+      'topics/fetchTopics',
+      'users/fetchUsers',
+      'posts/fetchPosts'
     ])
   }
 }

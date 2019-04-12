@@ -11,21 +11,21 @@ export default {
   mixins: [asyncDataStatus],
   computed: {
     ...mapState({
-      categories: state => Object.values(state.categories)
+      categories: state => Object.values(state.categories.items)
     })
   },
   async created () {
-    await this.fetchCategories()
-    await this.fetchTopics()
-    await this.fetchUsers()
+    await this['categories/fetchCategories']()
+    await this['topics/fetchTopics']()
+    await this['users/fetchUsers']()
     this.asyncDataStatus_fetched()
     this.$emit('ready')
   },
   methods: {
     ...mapActions([
-      'fetchCategories',
-      'fetchTopics',
-      'fetchUsers'
+      'categories/fetchCategories',
+      'topics/fetchTopics',
+      'users/fetchUsers'
     ])
   }
 }
