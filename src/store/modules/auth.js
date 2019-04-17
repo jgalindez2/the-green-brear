@@ -3,7 +3,7 @@ import firebase from 'firebase'
 export default {
   namespaced: true,
 
-  store: {
+  state: {
     unsubscribeAuthObserver: null,
     userId: null
   },
