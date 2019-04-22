@@ -1,25 +1,50 @@
 <template src="./template.html"></template>
 
 <script>
+import AppSpinner from '@/components/AppSpinner'
 import { mapActions } from 'vuex'
 export default {
+  components: {
+    AppSpinner
+  },
   data () {
     return {
       form: {
         email: '',
         password: ''
-      }
+      },
+      rules: {
+        email: [
+          { required: true, message: 'This field is required' },
+          { type: 'email', message: 'This format is not accepted' }
+        ],
+        password: [
+          { required: true, message: 'This field is required' }
+        ]
+      },
+      loading: false
     }
   },
   created () {
     this.$emit('ready')
   },
   methods: {
-    async signIn () {
+    signIn () {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.submitForm()
+        } else {
+          return false
+        }
+      })
+    },
+    async submitForm () {
+      this.loading = true
       try {
         await this['auth/signInWithEmailAndPassword'](this.form)
         this.successRedirect()
       } catch (error) {
+        this.loading = false
         alert(`Something went wrong: ${error}`)
       }
     },
