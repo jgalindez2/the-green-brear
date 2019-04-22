@@ -29,7 +29,7 @@ export default {
     this.$emit('ready')
   },
   methods: {
-    signIn () {
+    validateForm () {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.submitForm()

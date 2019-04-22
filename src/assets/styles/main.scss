@@ -28,7 +28,6 @@ button, a, span, button:focus{
   }
 }
 
-
 .header-title{
   border-bottom: 2px solid $themecolor;
 }
@@ -50,4 +49,8 @@ button, a, span, button:focus{
       } 
     }
   }
+}
+
+.loading-bg{
+  opacity: 0.4;
 }

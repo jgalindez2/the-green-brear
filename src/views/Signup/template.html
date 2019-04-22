@@ -1,33 +1,34 @@
 <el-container>
-  <el-main class="auth-form mt-4">
-    <el-card>
+  <el-main class="auth-form signup mt-4">
+    <app-spinner v-if="loading"></app-spinner>
+    <el-card :class="{'loading-bg': loading}">
       <h1 class="text-center">Register</h1>
-      <el-form label-position="top" label-width="50px" :model="form">
+      <el-form label-position="top" :rules="rules" ref="form" label-width="50px" :model="form">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="Full Name">
-              <el-input placeholder="Enter your fullname" v-model="form.name"></el-input>
+            <el-form-item label="Full Name" prop="name">
+              <el-input placeholder="Enter your fullname" v-model="form.name" :disabled="loading"></el-input>
             </el-form-item>
-            <el-form-item label="Email">
-              <el-input placeholder="Enter your email" type="email" v-model="form.email"></el-input>
+            <el-form-item label="Email" prop="email">
+              <el-input placeholder="Enter your email" type="email" v-model="form.email" :disabled="loading"></el-input>
             </el-form-item>
-            <el-form-item label="Password">
-              <el-input placeholder="Enter your password" type="password" v-model="form.password" show-password></el-input>
+            <el-form-item label="Password" prop="password">
+              <el-input placeholder="Enter your password" type="password" v-model="form.password" :disabled="loading"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="Username">
-              <el-input placeholder="Username" v-model="form.username"></el-input>
+            <el-form-item label="Username" prop="username">
+              <el-input placeholder="Username" v-model="form.username" :disabled="loading"></el-input>
             </el-form-item>
             <el-form-item label="Avatar">
-              <el-input placeholder="Enter your avatar" v-model="form.avatar"></el-input>
+              <el-input placeholder="Enter your avatar" v-model="form.avatar" :disabled="loading"></el-input>
             </el-form-item>
-            <el-form-item label="Repeat password">
-              <el-input placeholder="Enter your password" type="password" v-model="form.password" show-password></el-input>
+            <el-form-item label="Repeat password" prop="confirmPassword">
+              <el-input placeholder="Enter your password" type="password" v-model="form.confirmPassword" :disabled="loading"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-button class="mt-4 btn-app" @click="signUp" round>Sign up</el-button>
+        <el-button class="mt-4 btn-app" @click="validateForm" round>Sign up</el-button>
         <br>
         <el-button type="text"><router-link tag="span" class="green-color" :to="{name: 'Signin'}">Log in?</router-link></el-button>
       </el-form>
