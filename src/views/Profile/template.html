@@ -14,11 +14,11 @@
             <template v-if="!edit">
               <h2 class="text-left">{{ user.username | capitalize }}'s recent activity</h2>
               <hr>
-              <template v-if="posts.length !== 0">
+              <template v-if="userPosts.length !== 0">
                 <posts-list :per="5" :posts="userPosts"></posts-list>
               </template>
               <template v-else>
-                <h3 class="mt-4">You don't have any post yet.</h3>
+                <h3 class="mt-4">You don't have any register created yet.</h3>
               </template>
             </template>
             <template v-else>

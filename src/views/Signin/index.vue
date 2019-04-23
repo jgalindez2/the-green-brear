@@ -45,7 +45,7 @@ export default {
         this.successRedirect()
       } catch (error) {
         this.loading = false
-        alert(`Something went wrong: ${error}`)
+        this.$swal({ title: 'Wrong!', type: 'info', text: error })
       }
     },
     successRedirect () {

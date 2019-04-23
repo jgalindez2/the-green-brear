@@ -64,13 +64,11 @@ export default {
     async submitForm () {
       this.loading = true
       try {
-        if (!this.form.avatar) this.form.avatar = process.env.VUE_APP_AVATAR_URL_DEFAULT
         await this['auth/registerUserWithEmailAndPassword'](this.form)
         this.$router.push('/')
       } catch (error) {
         this.loading = false
-        // TODO Add sweat alert with the error message
-        console.log(error)
+        this.$swal({ title: 'Wrong!', type: 'info', text: error })
       }
     },
     ...mapActions([

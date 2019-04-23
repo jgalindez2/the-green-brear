@@ -9,7 +9,9 @@ import i18n from './plugins/i18n'
 import firebase from 'firebase'
 import VueMoment from 'vue-moment'
 import VueProgressBar from 'vue-progressbar'
+import VueSweetalert2 from 'vue-sweetalert2'
 
+Vue.use(VueSweetalert2)
 Vue.use(VueProgressBar, {
   color: '#738a73',
   failedColor: 'red',

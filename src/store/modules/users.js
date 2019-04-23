@@ -5,7 +5,7 @@ import { removeEmptyData } from '../../utils/'
 export default {
   namespaced: true,
 
-  store: {
+  state: {
     items: {}
   },
 

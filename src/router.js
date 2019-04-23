@@ -65,8 +65,8 @@ const router = new Router({
         name: 'Signout',
         path: '/logout',
         meta: { requiresAuth: true },
-        async beforeEnter (to, from, next) {
-          await store.dispatch('auth/signOut')
+        beforeEnter (to, from, next) {
+          store.dispatch('auth/signOut')
           next({ name: 'Home' })
         }
       }]

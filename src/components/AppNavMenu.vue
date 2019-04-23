@@ -4,10 +4,13 @@
       <div class="brand-icon">
         <router-link tag="span" :to="{name: 'Home'}">TGB</router-link>
       </div>
-      <el-submenu v-if="user" class="float-right" index="">
-        <template slot="title"><img with="40" height="40" class="rounded" :src="user.avatar" alt=""></template>
+      <el-submenu v-if="user" class="float-right user-dropdown" index="">
+        <template slot="title">
+          <img v-if="user.avatar" with="40" height="40" class="rounded" :src="user.avatar" alt="">
+          <avatar v-else :size="40" :username="user.name"></avatar>
+        </template>
         <el-menu-item index="/me">Profile</el-menu-item>
-        <el-menu-item index="" @click="signOut">Sign out</el-menu-item>
+        <el-menu-item index="/logout">Sign out</el-menu-item>
       </el-submenu>
       <template v-else>
         <el-menu-item class="float-right" index="/signin">Sign In</el-menu-item>
@@ -20,8 +23,12 @@
 </template>
 
 <script>
+import Avatar from 'vue-avatar'
 import { mapGetters, mapActions } from 'vuex'
 export default {
+  components: {
+    Avatar
+  },
   computed: {
     ...mapGetters({
       user: 'auth/getUser'
@@ -57,6 +64,12 @@ export default {
       }
       &:focus{
         outline: none;
+      }
+    }
+    .user-dropdown{
+      .el-submenu__title{
+        display: flex;
+        align-items: center;
       }
     }
   }
